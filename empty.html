@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0">    
         <link rel="stylesheet" href="css/global.css">
 
+
         <style>
           * {
               box-sizing: border-box; 
@@ -71,7 +72,6 @@
           }
           main > nav {
               flex: 0 0 15vw;
-              min-width: 12rem;
               padding: 0;
               background: white;
               border-right: 1px solid black;
@@ -95,7 +95,7 @@
           nav h2 {
               font-size: 80%;
               text-align: center;
-              margin-bottom: 0;
+              margin: 0;
           }
           nav a {
               color: black;
@@ -190,16 +190,6 @@
           article, nav, aside {
               padding: 1em;
           }
-          #add-task input, select, label {
-              display: block;
-              margin-bottom: 10px;
-          }
-          #add-task-buttons {
-                  list-style-type: none;
-                  display: flex;
-                  margin: 0;
-                  padding: 0;
-          }
 
           @media only screen and (max-width: 500px) {
               body {
@@ -227,10 +217,37 @@
               #main > article {
                   padding: 0 1rem 1em 1em;
               }
-              #team {
+              menu ul {
+                  justify-content: center;
+              }
+              menu ul li {
+                  padding: 7px 4px 0px 4px;
+              }
+              menu ul li.search {
+                  /*padding: 8px 10px 2px 10px;*/
+                  padding: 7px 4px 0px 4px;
+                  width: unset;
+              }
+              menu ul li.search input {
+                  display: none;
+              }
+              menu ul li.search img {
+                  position:unset;
+              }
+              #top-priorities {
                   flex-direction: column;
-                  margin: 0;
-                  padding: 0;
+              }
+              #top-priorities li {
+                  margin: 8px 0;
+              }
+              #top-priorities .index {
+                  display: none;
+              }
+              #normal-priorities li ul.item li.index {
+                  display: none;
+              }
+              #normal-priorities li ul.item li.duration {
+                  text-align: right;
               }
           }
         </style>
@@ -241,8 +258,11 @@
   </header>
   <main>
     <nav>
-      <h2>10/31/2017 4:00PM</h2>
       <ul>
+        <li>
+            <a href="index.html"><img src="img/home.png" /></a>
+            <h2>10/31/2017 4:00PM</h2>
+        </li>
         <li>
             <a href="">Today (5)</a>
             <p>ETA 3hrs</p>
@@ -267,13 +287,13 @@
     </nav>
     <section id="dashboard">
         <menu>
-                    <ul>
-                        <li class="clock"><a href=""><img src="img/clock.png" /></a></li>
-                        <li class="exclaimation"><a href=""><img src="img/exclamation.png" /></a></li>
-                        <li><a href=""><img src="img/drag.png" /></a></li>
-                        <li class="search"><input type="text" name="search" /><img src="img/search.png" /></li>
-                        <li><a href=""><img src="img/gear.png" /></a></li>
-                    </ul>
+            <ul>
+                <li class="clock"><a href=""><img src="img/clock.png" /></a></li>
+                <li class="exclaimation"><a href=""><img src="img/exclamation.png" /></a></li>
+                <li><a href=""><img src="img/drag.png" /></a></li>
+                <li class="search"><input type="text" name="search" /><img src="img/search.png" /></li>
+                <li><a href=""><img src="img/gear.png" /></a></li>
+            </ul>
         </menu>
         <section id="content">
             <h2>Placeholder page</h2>
@@ -288,7 +308,7 @@
       <!--
         <a href='http://dryicons.com/icon-packs/symbolize-icons-set'> Icon by Dryicons </a>
       -->
-      CSE 170 Footer
+      &copy; 2017 Matrix
     </footer>
 </body>
 </html>
