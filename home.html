@@ -139,11 +139,33 @@
                             localStorage.setItem("iu-tasks", JSON.stringify(tasks));
                             alert("Added new iu-task: " + taskName);
                         }  else {
+
                             // There are currently no tasks in the localStorage array
                             tasks[0] = taskName;
                             localStorage.setItem("iu-tasks", JSON.stringify(tasks));
                             alert("Added new iu-task: " + taskName);
                         }    
+
+                        // Add the task to the list
+                        var taskList = document.getElementById('iu-list');	
+                        var li = document.createElement("li");
+                        var inp = document.createElement("input");
+
+                        var att1 = document.createAttribute("type");
+                        att1.value = "checkbox";
+                        inp.setAttributeNode(att1); 
+    
+                        var att2 = document.createAttribute("class");
+                        att2.value = "iu-";
+                        li.setAttributeNode(att2);         
+    
+                        var att3 = document.createAttribute("onclick");
+                        att3.value = "checkTask(this);";
+                        li.setAttributeNode(att3);       
+
+                        li.appendChild(inp);
+				        li.appendChild(document.createTextNode(taskName));
+				        taskList.appendChild(li);
 
                     break;
 
@@ -168,7 +190,28 @@
                             localStorage.setItem("inu-tasks", JSON.stringify(tasks));
                             localStorage.setItem("inu-dates", JSON.stringify(dates));
                             alert("Added new inu-task: " + taskName);
-                        }    
+                        }
+
+                        // Add the task to the list
+                        var taskList = document.getElementById('inu-list');	
+                        var li = document.createElement("li");
+                        var inp = document.createElement("input");
+
+                        var att1 = document.createAttribute("type");
+                        att1.value = "checkbox";
+                        inp.setAttributeNode(att1); 
+    
+                        var att2 = document.createAttribute("class");
+                        att2.value = "inu-";
+                        li.setAttributeNode(att2);         
+    
+                        var att3 = document.createAttribute("onclick");
+                        att3.value = "checkTask(this, 2);";
+                        li.setAttributeNode(att3);      
+    
+                        li.appendChild(inp);
+                        li.appendChild(document.createTextNode(taskName + " on " + taskDate));
+                        taskList.appendChild(li);
 
                     break;
 
@@ -195,6 +238,27 @@
                             alert("Added new niu-task: " + taskName);
                         }    
 
+                        // Add the task to the list
+                        var taskList = document.getElementById('niu-list');		
+                        var li = document.createElement("li");
+                        var inp = document.createElement("input");
+
+                        var att1 = document.createAttribute("type");
+                        att1.value = "checkbox";
+                        inp.setAttributeNode(att1); 
+
+                        var att2 = document.createAttribute("class");
+                        att2.value = "niu-";
+                        li.setAttributeNode(att2);         
+
+                        var att3 = document.createAttribute("onclick");
+                        att3.value = "checkTask(this);";
+                        li.setAttributeNode(att3);      
+
+                        li.appendChild(inp);
+				        li.appendChild(document.createTextNode(taskName + " delegate to " + taskDelegate));
+				        taskList.appendChild(li);
+
                     break;
 
                     case 4:
@@ -212,7 +276,28 @@
                             tasks[0] = taskName;
                             localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
                             alert("Added new ninu-task: " + taskName);
-                        }    
+                        }
+
+                        // Add the task to the list
+                        var taskList = document.getElementById('ninu-list');	
+                        var li = document.createElement("li");
+                        var inp = document.createElement("input");
+
+                        var att1 = document.createAttribute("type");
+                        att1.value = "checkbox";
+                        inp.setAttributeNode(att1); 
+
+                        var att2 = document.createAttribute("class");
+                        att2.value = "ninu-";
+                        li.setAttributeNode(att2);         
+
+                        var att3 = document.createAttribute("onclick");
+                        att3.value = "checkTask(this);";
+                        li.setAttributeNode(att3);      
+
+                        li.appendChild(inp);
+				        li.appendChild(document.createTextNode(taskName));
+				        taskList.appendChild(li);
 
                     break;
 
@@ -508,6 +593,9 @@
 .box3 { background-color: green; }
 .box4 { background-color: rgb(207, 178, 12); }
 
+.header {
+    border-bottom: 1px solid black;
+}
 .header h2 {
     margin: 0;
     padding: 5px 5px 0 5px;
@@ -591,10 +679,6 @@
   </header>
   <main>
     <section id="dashboard">
-        <section id="matrix-top-headers">
-            <article><h2>Urgent</h2></article>
-            <article><h2>Not Urgent</h2></article>
-        </section>
         <section class="matrix">
             <article class="quadrant q1">
                 <section class="header">
@@ -645,13 +729,6 @@
         <form name="formIU" method="post">
             <label>Title</label>
             <input type="text" name="name" /><br>
-            <label>Section</label>
-            <select name="cars">
-                <option value="q1">Urgent & Important</option>
-                <option value="q2">Not Urgent & Important</option>
-                <option value="q3">Urgent & Not Important</option>
-                <option value="q4">Not Urgent & Not Important</option>
-            </select>
             <br>
             <input type="button" value="Add Task" onclick="addTask(this, 1)" />
         </form>
