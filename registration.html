@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CSE 170: Mock Login Page</title>
+        <title>CSE 170: Mock Registration Page</title>
         <meta name="description" content="CSE 170 - Web App">
         <meta name="keywords" content="CSE 170">
         <meta name="author" content="Matrix">
@@ -43,26 +43,26 @@
             button:hover {
                 opacity: 0.8;
             }
-			
-			/* Cancel btn */
+
+			/* Cancel button */
 			.cancelbtn:hover {
                 opacity: 0.8;
             }
-
+			
             /* Extra style for the cancel button (red) */
             .cancelbtn {
                 width: auto;
                 padding: 10px 18px;
-                background-color: #51c151;
-				border: none;
+                background-color: #f44336;
 				font-weight: bold;
-				color: white;
+				color: #ffffff;
+				border: none;
             }
 
-            /* Center the avatar image inside this container */
-            .imgcontainer {
+            /* Text formatting for forgot your password paragraph*/
+            .forgot_pw_text {
                 text-align: center;
-                margin: 24px 0 12px 0;
+                font-weight: bold;
             }
 
             /* Avatar image */
@@ -99,30 +99,34 @@
 
     <body>
         <header>
-            <h1>ScheduleMate - Login</h1>
+            <h1>ScheduleMate - Account Registration</h1>
         </header>
         <main>
-            <form action="home.html">
-                <div class="imgcontainer">
-                    <img src="img/login_pic.png" alt="Avatar" class="avatar">
+            <form action="registration.html">
+                <div class="forgot_pw_text">
+                    <p>Register a new account here.</p>
                 </div>
 
                 <div class="container">
-                    <label><b>Username &nbsp;</b></label>
-                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <label><b>E-mail &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="text" placeholder="Enter e-mail" name="emailfield" required>
 					<br>
-                    <label><b>Password &nbsp;</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+					<label><b>Username &nbsp;</b></label>
+					<input type="text" placeholder="Enter username" name="userfield" required>
 					<br>
-                    <button type="submit">Login</button>
+					<label><b>Password &nbsp;</b></label>
+					<input type="text" placeholder="Enter password" name="passwordfield" required>
 					<br>
-                    <input type="checkbox" checked="checked"> Remember me
+                    <button type="submit">Register Account</button>
+					<br>
                 </div>
 
                 <div class="container2" style="background-color:#f1f1f1">
-                    <input type="button" class="cancelbtn" value="Register" onclick="window.location.href='register.html'"/>
-                    <span class="psw">Forgot your <a href="forgot_password.html">password?</a></span>
+					<form>
+						<input type="button" class="cancelbtn" value="Cancel" onclick="window.location.href='login.html'"/>
+					</form>
                 </div>
+
             </form>
       </main>
       <footer>
