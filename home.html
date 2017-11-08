@@ -156,7 +156,7 @@
 
                     case 1:
                         tasks = JSON.parse(localStorage.getItem("iu-tasks"));
-                        alert("Removed task: " + tasks[index]);
+                        //alert("Removed task: " + tasks[index]);
                         tasks.splice(index, 1);
                         localStorage.setItem("iu-tasks", JSON.stringify(tasks));
                     break;
@@ -164,7 +164,7 @@
                     case 2:
                         tasks = JSON.parse(localStorage.getItem("inu-tasks"));
                         dates = JSON.parse(localStorage.getItem("inu-dates"));
-                        alert("Removed task: " + tasks[index]);
+                        //alert("Removed task: " + tasks[index]);
                         tasks.splice(index, 1);
                         dates.splice(index, 1);
                         localStorage.setItem("inu-tasks", JSON.stringify(tasks));
@@ -174,7 +174,7 @@
                     case 3:
                         tasks = JSON.parse(localStorage.getItem("niu-tasks"));
                         delegates = JSON.parse(localStorage.getItem("niu-delegates"));
-                        alert("Removed task: " + tasks[index]);
+                        //alert("Removed task: " + tasks[index]);
                         tasks.splice(index, 1);
                         delegates.splice(index, 1);
                         localStorage.setItem("niu-tasks", JSON.stringify(tasks));
@@ -183,7 +183,7 @@
 
                     case 4:
                         tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
-                        alert("Removed task: " + tasks[index]);
+                        //alert("Removed task: " + tasks[index]);
                         tasks.splice(index, 1);
                         localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
                     break;
@@ -193,6 +193,8 @@
                 }
 
                 task.parentElement.style.display = "none";
+                alert("Task was removed.");
+                
             }
 
             function addTask(form, type) {
@@ -255,7 +257,7 @@
 				        taskList.appendChild(li);
 
                         // Clear form elements
-                        taskName = document.forms["formIU"]["name"].value = "";
+                        document.forms["formIU"]["name"].value = "";
 
                     break;
 
@@ -310,6 +312,10 @@
                         li.appendChild(remlnk);
                         taskList.appendChild(li);
 
+                        // Clear form elements
+                        document.forms["formINU"]["name"].value = "";                        
+                        document.forms["formINU"]["date"].value = "";   
+
                     break;
 
                     case 3:
@@ -363,6 +369,10 @@
                         li.appendChild(remlnk);
 				        taskList.appendChild(li);
 
+                        // Clear form elements
+                        document.forms["formNIU"]["name"].value = "";                        
+                        document.forms["formNIU"]["delegate"].value = "";    
+
                     break;
 
                     case 4:
@@ -409,6 +419,9 @@
 				        li.appendChild(document.createTextNode(taskName));
                         li.appendChild(remlnk);
 				        taskList.appendChild(li);
+
+                        // Clear form elements
+                        document.forms["formNINU"]["name"].value = "";                        
 
                     break;
 
@@ -821,7 +834,7 @@ button {
             <article class="quadrant box2">
                 <section class="header">
                     <section class="left">
-                        <h2>Immediate, Not Urgent</h2>
+                        <h2>Immediate & Not Urgent</h2>
                         <h3>Decide when to do it</h3>
                     </section>
                     <section class="right"><button onclick="togglePanel('2')">(+) New Task</button></section>   
