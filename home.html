@@ -194,7 +194,6 @@
 
                 task.parentElement.style.display = "none";
                 alert("Task was removed.");
-                
             }
 
             function addTask(form, type) {
@@ -814,7 +813,8 @@ button {
 </head>
 <body onload="init()">
   <header>
-      <h1>Productivity Matrix - Dashboard</h1>
+      <h1 style="float: left;">Productivity Matrix - Dashboard</h1>
+      <div style="float: right"><a href="/">Logout</a></div>
   </header>
   <main>
     <section id="dashboard">
