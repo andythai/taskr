@@ -589,12 +589,18 @@
 .quadrant { margin: .250rem; }
 .quadrant h2 {    font-weight: bold;  }
 .q1 { background-color: rgb(216, 78, 78); }
-.box2 { background-color: blue; }
+.box2 { background-color: #4c99d8; }
 .box3 { background-color: green; }
 .box4 { background-color: rgb(207, 178, 12); }
 
 .header {
     border-bottom: 1px solid black;
+}
+.header .left {
+    float: left;
+}
+.header .right {
+    float: right;
 }
 .header h2 {
     margin: 0;
@@ -611,6 +617,12 @@
 #iu-list li input { 
     margin-right: 6px;
 }
+
+button {
+    padding: 12px;
+}
+
+
 
           @media only screen and (max-width: 500px) {
               body {
@@ -682,42 +694,50 @@
         <section class="matrix">
             <article class="quadrant q1">
                 <section class="header">
-                    <h2>Immediate & Urgent</h2>
-                    <h3>Do it now</h3>
+                    <section class="left">
+                        <h2>Immediate & Urgent</h2>
+                        <h3>Do it now</h3>
+                    </section>
+                    <section class="right"><button onclick="togglePanel('1')">(+) New Task</button></section>
                 </section>
                 <section class="body">
                     <ol id="iu-list"></ol>
-                    <button onclick="togglePanel('1')">(+)</button>
                 </section>
             </article>
             <article class="quadrant box2">
                 <section class="header">
-                    <h2>Immediate, Not Urgent</h2>
-                    <h3>Decide when to do it</h3>
+                    <section class="left">
+                        <h2>Immediate, Not Urgent</h2>
+                        <h3>Decide when to do it</h3>
+                    </section>
+                    <section class="right"><button onclick="togglePanel('2')">(+) New Task</button></section>   
                 </section>                
                 <section class="body">
                     <ol id="inu-list"></ol>
-                    <button onclick="togglePanel('2')">(+)</button>
                 </section>
             </article>
             <article class="quadrant box3">
                 <section class="header">
-                    <h2>Not Immediate & Urgent</h2>
-                    <h3>Delegate it to someone else</h3>
+                    <section class="left">
+                        <h2>Not Immediate & Urgent</h2>
+                        <h3>Delegate it to someone else</h3>
+                    </section>
+                    <section class="right"><button onclick="togglePanel('3')">(+) New Task</button></section>                       
                 </section>                
                 <section class="body">
                     <ol id="niu-list"></ol>
-                    <button onclick="togglePanel('3')">(+)</button>
                 </section>
             </article>
             <article class="quadrant box4">
                 <section class="header">
-                    <h2>Not Immediate & Not Urgent</h2>
-                    <h3>Do later or delete</h3>
+                    <section class="left">
+                        <h2>Not Immediate & Not Urgent</h2>
+                        <h3>Do later or delete</h3>
+                    </section>
+                    <section class="right"><button onclick="togglePanel('4')">(+) New Task</button></section>    
                 </section>                
                 <section class="body">
                     <ol id="ninu-list"></ol>
-                    <button onclick="togglePanel('4')">(+)</button>
                 </section>
             </article>
         </section>
