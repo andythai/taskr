@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>CSE 170: A5</title>
+        <meta name="description" content="CSE 170 - Web App">
+        <meta name="keywords" content="CSE 170">
+        <meta name="author" content="Matrix">
+        <meta name="robots" content="noindex">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">    
+        <link rel="stylesheet" href="css/global.css">
+        <script>
+        
+            function init() {
+
+                /* Immediate & Urget */
+                var taskList = document.getElementById('iu-list');			
+			    var tasks = JSON.parse(localStorage.getItem("iu-tasks"));
+               
+			    for (var i in tasks){
+				    var li = document.createElement("li");
+                    var inp = document.createElement("input");
+
+                    var att = document.createAttribute("type");
+                    att.value = "checkbox";
+                    inp.setAttributeNode(att); 
+
+                    var att2 = document.createAttribute("class");
+                    att2.value = "iu-" + i;
+                    li.setAttributeNode(att2);         
+
+                    var att3 = document.createAttribute("onclick");
+                    att3.value = "checkTask(this);";
+                    li.setAttributeNode(att3);      
+
+                    li.appendChild(inp);
+				    li.appendChild(document.createTextNode(tasks[i]));
+				    taskList.appendChild(li);
+			    } 
+
+                /* Immediate & Not Urget */
+                var taskList = document.getElementById('inu-list');			
+			    var tasks = JSON.parse(localStorage.getItem("inu-tasks"));
+                var dates = JSON.parse(localStorage.getItem("inu-dates"));
+
+			    for (var i in tasks){
+				    var li = document.createElement("li");
+                    var inp = document.createElement("input");
+
+                    var att = document.createAttribute("type");
+                    att.value = "checkbox";
+                    inp.setAttributeNode(att); 
+
+                    var att2 = document.createAttribute("class");
+                    att2.value = "inu-" + i;
+                    li.setAttributeNode(att2);         
+
+                    var att3 = document.createAttribute("onclick");
+                    att3.value = "checkTask(this);";
+                    li.setAttributeNode(att3);      
+
+                    li.appendChild(inp);
+				    li.appendChild(document.createTextNode(tasks[i] + " on " + dates[i]));
+				    taskList.appendChild(li);
+			    } 
+
+                /* Not Immediate & Urget */
+                var taskList = document.getElementById('niu-list');			
+			    var tasks = JSON.parse(localStorage.getItem("niu-tasks"));
+                var delegates = JSON.parse(localStorage.getItem("niu-delegates"));
+
+			    for (var i in tasks){
+				    var li = document.createElement("li");
+                    var inp = document.createElement("input");
+
+                    var att = document.createAttribute("type");
+                    att.value = "checkbox";
+                    inp.setAttributeNode(att); 
+
+                    var att2 = document.createAttribute("class");
+                    att2.value = "inu-" + i;
+                    li.setAttributeNode(att2);         
+
+                    var att3 = document.createAttribute("onclick");
+                    att3.value = "checkTask(this);";
+                    li.setAttributeNode(att3);      
+
+                    li.appendChild(inp);
+				    li.appendChild(document.createTextNode(tasks[i] + " delegate to " + delegates[i]));
+				    taskList.appendChild(li);
+			    } 
+
+                /* Not Immediate & Not-Urget */
+                var taskList = document.getElementById('ninu-list');			
+			    var tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
+               
+			    for (var i in tasks){
+				    var li = document.createElement("li");
+                    var inp = document.createElement("input");
+
+                    var att = document.createAttribute("type");
+                    att.value = "checkbox";
+                    inp.setAttributeNode(att); 
+
+                    var att2 = document.createAttribute("class");
+                    att2.value = "ninu-" + i;
+                    li.setAttributeNode(att2);         
+
+                    var att3 = document.createAttribute("onclick");
+                    att3.value = "checkTask(this);";
+                    li.setAttributeNode(att3);      
+
+                    li.appendChild(inp);
+				    li.appendChild(document.createTextNode(tasks[i]));
+				    taskList.appendChild(li);
+			    } 
+
+            }
+
+            function addTask(form, type) {
+
+                var tasks = [];
+                var dates = [];
+                var delegates = [];
+                var taskName = "";
+                var taskDate = "";
+                var taskDelegate = "";
+
+                switch (type) {
+
+                    case 1:
+
+                        taskName = document.forms["formIU"]["name"].value;
+
+                        if (localStorage.getItem("iu-tasks") !== null) {
+                            tasks = JSON.parse(localStorage.getItem("iu-tasks"));
+                            var length = tasks.length;
+                            tasks[length] = taskName;
+                            localStorage.setItem("iu-tasks", JSON.stringify(tasks));
+                            alert("Added new iu-task: " + taskName);
+                        }  else {
+                            // There are currently no tasks in the localStorage array
+                            tasks[0] = taskName;
+                            localStorage.setItem("iu-tasks", JSON.stringify(tasks));
+                            alert("Added new iu-task: " + taskName);
+                        }    
+
+                    break;
+
+                    case 2:
+
+                        taskName = document.forms["formINU"]["name"].value;
+                        taskDate = document.forms["formINU"]["date"].value;
+
+                        if (localStorage.getItem("inu-tasks") !== null) {
+                            tasks = JSON.parse(localStorage.getItem("inu-tasks"));
+                            dates = JSON.parse(localStorage.getItem("inu-dates"));
+                            var length = tasks.length;
+                            tasks[length] = taskName;
+                            dates[length] = taskDate;
+                            localStorage.setItem("inu-tasks", JSON.stringify(tasks));
+                            localStorage.setItem("inu-dates", JSON.stringify(dates));
+                            alert("Added new inu-task: " + taskName);
+                        }  else {
+                            // There are currently no tasks in the localStorage array
+                            tasks[0] = taskName;
+                            dates[0] = taskDate;
+                            localStorage.setItem("inu-tasks", JSON.stringify(tasks));
+                            localStorage.setItem("inu-dates", JSON.stringify(dates));
+                            alert("Added new inu-task: " + taskName);
+                        }    
+
+                    break;
+
+                    case 3:
+
+                        taskName = document.forms["formNIU"]["name"].value;
+                        taskDelegate = document.forms["formNIU"]["delegate"].value;
+
+                        if (localStorage.getItem("niu-tasks") !== null) {
+                            tasks = JSON.parse(localStorage.getItem("niu-tasks"));
+                            delegates = JSON.parse(localStorage.getItem("niu-delegates"));
+                            var length = tasks.length;
+                            tasks[length] = taskName;
+                            delegates[length] = taskDelegate;
+                            localStorage.setItem("niu-tasks", JSON.stringify(tasks));
+                            localStorage.setItem("niu-delegates", JSON.stringify(delegates));
+                            alert("Added new niu-task: " + taskName);
+                        }  else {
+                            // There are currently no tasks in the localStorage array
+                            tasks[0] = taskName;
+                            delegates[0] = taskDelegate;
+                            localStorage.setItem("niu-tasks", JSON.stringify(tasks));
+                            localStorage.setItem("niu-delegates", JSON.stringify(delegates));
+                            alert("Added new niu-task: " + taskName);
+                        }    
+
+                    break;
+
+                    case 4:
+
+                        taskName = document.forms["formNINU"]["name"].value;
+
+                        if (localStorage.getItem("ninu-tasks") !== null) {
+                            tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
+                            var length = tasks.length;
+                            tasks[length] = taskName;
+                            localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
+                            alert("Added new ninu-task: " + taskName);
+                        }  else {
+                            // There are currently no tasks in the localStorage array
+                            tasks[0] = taskName;
+                            localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
+                            alert("Added new ninu-task: " + taskName);
+                        }    
+
+                    break;
+
+                    default:
+                        alert("Unknown Case.");
+                }
+
+            }
+
+            function checkTask(task) {
+
+                var isChecked = task.firstElementChild.checked;
+
+                if (isChecked) {
+                    task.style.textDecoration = "line-through";
+                } else {
+                    task.style.textDecoration = "none";
+                }
+
+            }
+
+		    function togglePanel(type) {
+
+                if (type =='1')
+			        var panel = document.getElementById('panelIU');
+                else if (type == '2')
+                    var panel = document.getElementById('panelINU');
+                else if (type == '3')
+                    var panel = document.getElementById('panelNIU');
+                else if (type == '4')
+                    var panel = document.getElementById('panelNINU');
+
+    	        if (panel.style.display === '' || panel.style.display === 'none') {
+                    document.getElementById('panelIU').style.display = 'none';
+                    document.getElementById('panelINU').style.display = 'none';
+                    document.getElementById('panelNIU').style.display = 'none';
+                    document.getElementById('panelNINU').style.display = 'none';
+        	        panel.style.display = 'block';
+    	        } else {
+        	        panel.style.display = 'none';
+    		    }
+
+		    }
+        
+        </script>
+        <style>
+          * {
+              box-sizing: border-box; 
+          }
+          body {
+              display: flex;
+              min-height: 100vh;
+              flex-direction: column;
+              margin: 0;
+          }
+          header {
+              padding: 1.15rem;
+              background: black;
+              color: white;
+              height: 30%;
+              border-bottom: 1px solid black;
+          }
+          header h1 {
+              margin: 0;
+          }
+          menu {
+              margin: 0;
+              padding: 0;
+          }
+          menu ul {
+              margin: 0;
+              padding: 0;
+              display: flex;
+              list-style-type: none;
+          }
+          menu ul li {
+            padding: 8px 10px 2px 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            margin: 3px;
+          }
+          menu ul li.search {
+              width: 90%;
+              padding: 0 12px;
+          }
+          menu ul li.search input {
+              width: 90%;
+              height: 70%;
+              border: none;
+          }
+          menu ul li.search img {
+              position: relative;
+              top: 7px;
+              left: 12px;
+          }
+          main {
+              display: flex;
+              flex: 1;
+          }
+          main > section {
+              margin: 1rem;
+              flex: 1;
+              order: 1;
+          }        
+          #panelIU {
+              display: none;
+              flex: 0 0 25vw;
+              padding: 0;
+              background: #EFEFEF;
+              border-right: 1px solid black;
+              order: 2;
+          }
+          #panelINU {
+              display: none;
+              flex: 0 0 25vw;
+              padding: 0;
+              background: #EFEFEF;
+              border-right: 1px solid black;
+              order: 2;
+          }
+          #panelNIU {
+              display: none;
+              flex: 0 0 25vw;
+              padding: 0;
+              background: #EFEFEF;
+              border-right: 1px solid black;
+              order: 2;
+          }
+          #panelNINU {
+              display: none;
+              flex: 0 0 25vw;
+              padding: 0;
+              background: #EFEFEF;
+              border-right: 1px solid black;
+              order: 2;
+          }
+          main > nav ul {
+              flex: 0 0 15vw;
+              margin: 0;
+              padding: 0;
+              background: white;
+              order: 1;
+          }
+          main > nav li {
+              padding: 10px 10px;
+              border-bottom: 1px solid #000;
+              text-align: center;
+              list-style-type: none;
+          }
+          nav {
+              font-size: 1.5rem;
+          }
+          nav h2 {
+              font-size: 80%;
+              text-align: center;
+              margin: 0;
+          }
+          nav a {
+              color: black;
+              text-decoration: none;
+              font-size: 80%;
+          }
+          nav li p {
+              font-size: 60%;
+              margin: 0;
+          }
+          #dashboard {
+            border-radius: 10px;
+            border: 1px solid black;
+            padding: 10px;
+          }
+          #top-priorities {
+              list-style-type: none;
+              display: flex;
+              justify-content: center;
+              padding: 0;
+          }
+          #top-priorities li {
+              margin: 0 .5rem;
+          }
+          .index {
+              border: 1px solid black;
+              margin: 0 auto;
+              width: 1.5rem;
+              text-align: center;
+              margin-bottom: 10px;
+              font-size: 150%;
+              border-radius: 5px;
+          }
+          #new-task {
+              text-align: center;
+          }
+          #new-task button {
+              font-size: 120%;
+          }
+          .sticky {
+              border: 1px solid black;
+              background-color: yellow;
+              padding: 10px;
+          }
+          .sticky .message {
+              font-size: 140%;
+              font-weight: bold;
+              margin-top: 0;
+          }
+          .sticky .time {
+              text-align: right;
+              margin-bottom: 0;
+          }
+          #top-priorities li.first, #top-priorities li.last {
+              margin:0;
+          }
+          #normal-priorities {
+              list-style-type: none;
+              padding: 0;
+          }
+          #normal-priorities > li {
+              margin: .5rem 0 ;
+              border: 1px solid black;
+              padding: 1rem 0;
+          }
+          #normal-priorities li ul.item {
+              list-style-type: none;
+              display: flex;
+              font-size: 130%;
+              padding: 0 1rem;
+          }
+          #normal-priorities li ul.item li.number {
+              border: 1px solid black;
+              border-radius: 50%;
+              text-align: center;
+              margin-right: .75rem;
+              width: 5%;
+          }
+          #normal-priorities li ul.item li.name {
+              width: 70%;
+          }
+          #normal-priorities li ul.item li.duration {
+              width: 25%;
+          }
+          footer {
+              background: black;
+              color: white;
+              height: 5vh;
+              padding: .50rem;
+              text-align: center;
+          }
+          article, nav, aside {
+              padding: 1em;
+          }
+          input, select {
+              margin: 10px 0;
+          }
+          label {
+              display: block;
+          }
+
+#matrix-top-headers {
+    display: flex;
+
+}
+#matrix-top-headers > article {
+    display: flex;
+    flex-basis: calc(50% - 10px);
+    justify-content: center;
+}
+#matrix-top-headers > article h2 {
+    margin: 0;
+    font-weight: bold;
+}
+.matrix {
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.matrix > article {
+  display: flex; 
+  flex-basis: calc(50% - 10px);  
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+.matrix > article > div {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.quadrant { margin: .250rem; }
+.quadrant h2 {    font-weight: bold;  }
+.q1 { background-color: rgb(216, 78, 78); }
+.box2 { background-color: blue; }
+.box3 { background-color: green; }
+.box4 { background-color: rgb(207, 178, 12); }
+
+.header h2 {
+    margin: 0;
+    padding: 5px 5px 0 5px;
+}
+.header h3 {
+    margin: 0;
+    padding: 0 5px 5px 5px;
+}
+#q1-list {
+    list-style-type: none;
+}
+
+#iu-list li input { 
+    margin-right: 6px;
+}
+
+          @media only screen and (max-width: 500px) {
+              body {
+
+              }
+              header {
+                  text-align: center;
+                  padding: .75rem;
+              }
+              nav {
+                  padding: 0;
+              }
+              nav > h2 {
+                  margin: 0;
+              }
+              nav > ul {
+                  margin: 0;
+                  padding: 0;
+                  list-style-type: none;
+              }
+              #main {
+                  flex-direction: column;
+                  text-align: center;
+              }
+              #main > article {
+                  padding: 0 1rem 1em 1em;
+              }
+              menu ul {
+                  justify-content: center;
+              }
+              menu ul li {
+                  padding: 7px 4px 0px 4px;
+              }
+              menu ul li.search {
+                  /*padding: 8px 10px 2px 10px;*/
+                  padding: 7px 4px 0px 4px;
+                  width: unset;
+              }
+              menu ul li.search input {
+                  display: none;
+              }
+              menu ul li.search img {
+                  position:unset;
+              }
+              #top-priorities {
+                  flex-direction: column;
+              }
+              #top-priorities li {
+                  margin: 8px 0;
+              }
+              #top-priorities .index {
+                  display: none;
+              }
+              #normal-priorities li ul.item li.index {
+                  display: none;
+              }
+              #normal-priorities li ul.item li.duration {
+                  text-align: right;
+              }
+          }
+        </style>
+</head>
+<body onload="init()">
+  <header>
+      <h1>Productivity Matrix - Dashboard</h1>
+  </header>
+  <main>
+    <section id="dashboard">
+        <section id="matrix-top-headers">
+            <article><h2>Urgent</h2></article>
+            <article><h2>Not Urgent</h2></article>
+        </section>
+        <section class="matrix">
+            <article class="quadrant q1">
+                <section class="header">
+                    <h2>Immediate & Urgent</h2>
+                    <h3>Do it now</h3>
+                </section>
+                <section class="body">
+                    <ol id="iu-list"></ol>
+                    <button onclick="togglePanel('1')">(+)</button>
+                </section>
+            </article>
+            <article class="quadrant box2">
+                <section class="header">
+                    <h2>Immediate, Not Urgent</h2>
+                    <h3>Decide when to do it</h3>
+                </section>                
+                <section class="body">
+                    <ol id="inu-list"></ol>
+                    <button onclick="togglePanel('2')">(+)</button>
+                </section>
+            </article>
+            <article class="quadrant box3">
+                <section class="header">
+                    <h2>Not Immediate & Urgent</h2>
+                    <h3>Delegate it to someone else</h3>
+                </section>                
+                <section class="body">
+                    <ol id="niu-list"></ol>
+                    <button onclick="togglePanel('3')">(+)</button>
+                </section>
+            </article>
+            <article class="quadrant box4">
+                <section class="header">
+                    <h2>Not Immediate & Not Urgent</h2>
+                    <h3>Do later or delete</h3>
+                </section>                
+                <section class="body">
+                    <ol id="ninu-list"></ol>
+                    <button onclick="togglePanel('4')">(+)</button>
+                </section>
+            </article>
+        </section>
+
+    </section>
+    <aside id="panelIU">
+        <h2>Immediate & Urgent (Do it now)</h2>
+        <h3>Add a Task</h3>
+        <form name="formIU" method="post">
+            <label>Title</label>
+            <input type="text" name="name" /><br>
+            <label>Section</label>
+            <select name="cars">
+                <option value="q1">Urgent & Important</option>
+                <option value="q2">Not Urgent & Important</option>
+                <option value="q3">Urgent & Not Important</option>
+                <option value="q4">Not Urgent & Not Important</option>
+            </select>
+            <br>
+            <input type="button" value="Add Task" onclick="addTask(this, 1)" />
+        </form>
+    </aside>
+
+    <aside id="panelINU">
+        <h2>Immediate & Not-Urgent (Decide When To Do It)</h2>
+        <h3>Add a Task</h3>
+        <form name="formINU" method="post">
+            <label>Title</label>
+            <input type="text" name="name" /><br>
+            <label>Date</label>
+            <input name="date" type="date">
+            <br>
+            <input type="button" value="Add Task" onclick="addTask(this, 2)" />
+        </form>
+    </aside>
+
+    <aside id="panelNIU">
+        <h2>Not Immediate & Urgent</h2>
+        <h3>Add a Task</h3>
+        <form name="formNIU" method="post">
+            <label>Task name:</label>
+            <input type="text" name="name" /><br>
+            <label>Person to delegate to:</label>
+            <input name="delegate" type="text">
+            <br>
+            <input type="button" value="Add Task" onclick="addTask(this, 3)" />
+        </form>
+    </aside>
+
+    <aside id="panelNINU">
+        <h2>Not Immediate & Not-Urgent</h2>
+        <h3>Add a Task</h3>
+        <form name="formNINU" method="post">
+            <label>Task name:</label>
+            <input type="text" name="name" /><br>
+            <br>
+            <input type="button" value="Add Task" onclick="addTask(this, 4)" />
+        </form>
+    </aside>
+
+    </main>
+    <footer>
+      &copy; 2017 Team Matrix CSE 170
+    </footer>
+</body>
+</html>
