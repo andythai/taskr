@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CSE 170: A5</title>
+        <title>CSE 170: A5 - Productivity Matrix</title>
         <meta name="description" content="CSE 170 - Web App">
         <meta name="keywords" content="CSE 170">
         <meta name="author" content="Matrix">
@@ -20,21 +20,28 @@
 			    for (var i in tasks){
 				    var li = document.createElement("li");
                     var inp = document.createElement("input");
+                    var remlnk = document.createElement("a");
 
                     var att = document.createAttribute("type");
                     att.value = "checkbox";
                     inp.setAttributeNode(att); 
 
                     var att2 = document.createAttribute("class");
-                    att2.value = "iu-" + i;
+                    att2.value = i;
                     li.setAttributeNode(att2);         
 
                     var att3 = document.createAttribute("onclick");
                     att3.value = "checkTask(this);";
                     li.setAttributeNode(att3);      
 
+                    var att4 = document.createAttribute("onclick");
+                    att4.value = "removeTask(this,1);";
+                    remlnk.setAttributeNode(att4);  
+                    remlnk.appendChild(document.createTextNode(" [X]"));
+
                     li.appendChild(inp);
 				    li.appendChild(document.createTextNode(tasks[i]));
+                    li.appendChild(remlnk);
 				    taskList.appendChild(li);
 			    } 
 
@@ -46,21 +53,28 @@
 			    for (var i in tasks){
 				    var li = document.createElement("li");
                     var inp = document.createElement("input");
+                    var remlnk = document.createElement("a");
 
                     var att = document.createAttribute("type");
                     att.value = "checkbox";
                     inp.setAttributeNode(att); 
 
                     var att2 = document.createAttribute("class");
-                    att2.value = "inu-" + i;
+                    att2.value = i;
                     li.setAttributeNode(att2);         
 
                     var att3 = document.createAttribute("onclick");
                     att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);      
+                    li.setAttributeNode(att3);
+
+                    var att4 = document.createAttribute("onclick");
+                    att4.value = "removeTask(this,2);";
+                    remlnk.setAttributeNode(att4);  
+                    remlnk.appendChild(document.createTextNode(" [X]"));
 
                     li.appendChild(inp);
 				    li.appendChild(document.createTextNode(tasks[i] + " on " + dates[i]));
+                    li.appendChild(remlnk);
 				    taskList.appendChild(li);
 			    } 
 
@@ -72,21 +86,28 @@
 			    for (var i in tasks){
 				    var li = document.createElement("li");
                     var inp = document.createElement("input");
+                    var remlnk = document.createElement("a");
 
                     var att = document.createAttribute("type");
                     att.value = "checkbox";
                     inp.setAttributeNode(att); 
 
                     var att2 = document.createAttribute("class");
-                    att2.value = "inu-" + i;
+                    att2.value = i;
                     li.setAttributeNode(att2);         
 
                     var att3 = document.createAttribute("onclick");
                     att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);      
+                    li.setAttributeNode(att3);
+
+                    var att4 = document.createAttribute("onclick");
+                    att4.value = "removeTask(this,3);";
+                    remlnk.setAttributeNode(att4);  
+                    remlnk.appendChild(document.createTextNode(" [X]"));
 
                     li.appendChild(inp);
 				    li.appendChild(document.createTextNode(tasks[i] + " delegate to " + delegates[i]));
+                    li.appendChild(remlnk);
 				    taskList.appendChild(li);
 			    } 
 
@@ -97,24 +118,81 @@
 			    for (var i in tasks){
 				    var li = document.createElement("li");
                     var inp = document.createElement("input");
+                    var remlnk = document.createElement("a");
 
                     var att = document.createAttribute("type");
                     att.value = "checkbox";
                     inp.setAttributeNode(att); 
 
                     var att2 = document.createAttribute("class");
-                    att2.value = "ninu-" + i;
+                    att2.value = i;
                     li.setAttributeNode(att2);         
 
                     var att3 = document.createAttribute("onclick");
                     att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);      
+                    li.setAttributeNode(att3);
+
+                    var att4 = document.createAttribute("onclick");
+                    att4.value = "removeTask(this,4);";
+                    remlnk.setAttributeNode(att4);
+                    remlnk.appendChild(document.createTextNode(" [X]"));
 
                     li.appendChild(inp);
 				    li.appendChild(document.createTextNode(tasks[i]));
+                    li.appendChild(remlnk);
 				    taskList.appendChild(li);
 			    } 
 
+            }
+
+            function removeTask(task, type) {
+                //alert("Removing " + task.parentElement.className);
+                var index = task.parentElement.className;
+                var tasks = [];
+                var dates = [];
+                var delegates = [];
+
+                switch (type) {
+
+                    case 1:
+                        tasks = JSON.parse(localStorage.getItem("iu-tasks"));
+                        alert("Removed task: " + tasks[index]);
+                        tasks.splice(index, 1);
+                        localStorage.setItem("iu-tasks", JSON.stringify(tasks));
+                    break;
+
+                    case 2:
+                        tasks = JSON.parse(localStorage.getItem("inu-tasks"));
+                        dates = JSON.parse(localStorage.getItem("inu-dates"));
+                        alert("Removed task: " + tasks[index]);
+                        tasks.splice(index, 1);
+                        dates.splice(index, 1);
+                        localStorage.setItem("inu-tasks", JSON.stringify(tasks));
+                        localStorage.setItem("inu-dates", JSON.stringify(dates));
+                    break;
+
+                    case 3:
+                        tasks = JSON.parse(localStorage.getItem("niu-tasks"));
+                        delegates = JSON.parse(localStorage.getItem("niu-delegates"));
+                        alert("Removed task: " + tasks[index]);
+                        tasks.splice(index, 1);
+                        delegates.splice(index, 1);
+                        localStorage.setItem("niu-tasks", JSON.stringify(tasks));
+                        localStorage.setItem("niu-delegates", JSON.stringify(delegates));
+                    break;
+
+                    case 4:
+                        tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
+                        alert("Removed task: " + tasks[index]);
+                        tasks.splice(index, 1);
+                        localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
+                    break;
+
+                    default:
+                        alert("Unknown Case.");
+                }
+
+                task.parentElement.style.display = "none";
             }
 
             function addTask(form, type) {
@@ -125,6 +203,7 @@
                 var taskName = "";
                 var taskDate = "";
                 var taskDelegate = "";
+                var length = 0;
 
                 switch (type) {
 
@@ -134,14 +213,15 @@
 
                         if (localStorage.getItem("iu-tasks") !== null) {
                             tasks = JSON.parse(localStorage.getItem("iu-tasks"));
-                            var length = tasks.length;
+                            length = tasks.length;
                             tasks[length] = taskName;
                             localStorage.setItem("iu-tasks", JSON.stringify(tasks));
                             alert("Added new iu-task: " + taskName);
                         }  else {
 
                             // There are currently no tasks in the localStorage array
-                            tasks[0] = taskName;
+                            length = 0;
+                            tasks[length] = taskName;
                             localStorage.setItem("iu-tasks", JSON.stringify(tasks));
                             alert("Added new iu-task: " + taskName);
                         }    
@@ -150,22 +230,32 @@
                         var taskList = document.getElementById('iu-list');	
                         var li = document.createElement("li");
                         var inp = document.createElement("input");
+                        var remlnk = document.createElement("a");
 
                         var att1 = document.createAttribute("type");
                         att1.value = "checkbox";
                         inp.setAttributeNode(att1); 
     
                         var att2 = document.createAttribute("class");
-                        att2.value = "iu-";
+                        att2.value = length;
                         li.setAttributeNode(att2);         
     
                         var att3 = document.createAttribute("onclick");
                         att3.value = "checkTask(this);";
                         li.setAttributeNode(att3);       
 
+                        var att4 = document.createAttribute("onclick");
+                        att4.value = "removeTask(this,1);";
+                        remlnk.setAttributeNode(att4);  
+                        remlnk.appendChild(document.createTextNode(" [X]"));
+
                         li.appendChild(inp);
 				        li.appendChild(document.createTextNode(taskName));
+                        li.appendChild(remlnk);
 				        taskList.appendChild(li);
+
+                        // Clear form elements
+                        taskName = document.forms["formIU"]["name"].value = "";
 
                     break;
 
@@ -196,6 +286,7 @@
                         var taskList = document.getElementById('inu-list');	
                         var li = document.createElement("li");
                         var inp = document.createElement("input");
+                        var remlnk = document.createElement("a");
 
                         var att1 = document.createAttribute("type");
                         att1.value = "checkbox";
@@ -209,8 +300,14 @@
                         att3.value = "checkTask(this, 2);";
                         li.setAttributeNode(att3);      
     
+                        var att4 = document.createAttribute("onclick");
+                        att4.value = "removeTask(this, 2);";
+                        remlnk.setAttributeNode(att4);  
+                        remlnk.appendChild(document.createTextNode(" [X]"));
+
                         li.appendChild(inp);
                         li.appendChild(document.createTextNode(taskName + " on " + taskDate));
+                        li.appendChild(remlnk);
                         taskList.appendChild(li);
 
                     break;
@@ -242,6 +339,7 @@
                         var taskList = document.getElementById('niu-list');		
                         var li = document.createElement("li");
                         var inp = document.createElement("input");
+                        var remlnk = document.createElement("a");
 
                         var att1 = document.createAttribute("type");
                         att1.value = "checkbox";
@@ -253,10 +351,16 @@
 
                         var att3 = document.createAttribute("onclick");
                         att3.value = "checkTask(this);";
-                        li.setAttributeNode(att3);      
+                        li.setAttributeNode(att3);
+
+                        var att4 = document.createAttribute("onclick");
+                        att4.value = "removeTask(this, 3);";
+                        remlnk.setAttributeNode(att4);  
+                        remlnk.appendChild(document.createTextNode(" [X]"));
 
                         li.appendChild(inp);
 				        li.appendChild(document.createTextNode(taskName + " delegate to " + taskDelegate));
+                        li.appendChild(remlnk);
 				        taskList.appendChild(li);
 
                     break;
@@ -282,6 +386,7 @@
                         var taskList = document.getElementById('ninu-list');	
                         var li = document.createElement("li");
                         var inp = document.createElement("input");
+                        var remlnk = document.createElement("a");
 
                         var att1 = document.createAttribute("type");
                         att1.value = "checkbox";
@@ -293,10 +398,16 @@
 
                         var att3 = document.createAttribute("onclick");
                         att3.value = "checkTask(this);";
-                        li.setAttributeNode(att3);      
+                        li.setAttributeNode(att3);
+
+                        var att4 = document.createAttribute("onclick");
+                        att4.value = "removeTask(this, 4);";
+                        remlnk.setAttributeNode(att4);  
+                        remlnk.appendChild(document.createTextNode(" [X]")); 
 
                         li.appendChild(inp);
 				        li.appendChild(document.createTextNode(taskName));
+                        li.appendChild(remlnk);
 				        taskList.appendChild(li);
 
                     break;
@@ -405,7 +516,7 @@
           #panelIU {
               display: none;
               flex: 0 0 25vw;
-              padding: 0;
+              padding: 10px;
               background: #EFEFEF;
               border-right: 1px solid black;
               order: 2;
@@ -413,7 +524,7 @@
           #panelINU {
               display: none;
               flex: 0 0 25vw;
-              padding: 0;
+              padding: 10px;
               background: #EFEFEF;
               border-right: 1px solid black;
               order: 2;
@@ -421,7 +532,7 @@
           #panelNIU {
               display: none;
               flex: 0 0 25vw;
-              padding: 0;
+              padding: 10px;
               background: #EFEFEF;
               border-right: 1px solid black;
               order: 2;
@@ -429,7 +540,7 @@
           #panelNINU {
               display: none;
               flex: 0 0 25vw;
-              padding: 0;
+              padding: 10px;
               background: #EFEFEF;
               border-right: 1px solid black;
               order: 2;
@@ -622,6 +733,9 @@ button {
     padding: 12px;
 }
 
+#iu-list a, #inu-list a, #niu-list a, #ninu-list a {
+    color: blue;
+}
 
 
           @media only screen and (max-width: 500px) {
