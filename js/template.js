@@ -208,6 +208,8 @@ function loadList(name) {
 
                 for (var i in tasks) {
 
+                    task = tasks[i];
+
                     var li = document.createElement("li");
                     var input = document.createElement("input");
                     var btn = document.createElement("button");
@@ -219,6 +221,15 @@ function loadList(name) {
                     attr = document.createAttribute("onclick");
                     attr.value = "checkTask(this);";
                     input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-id");
+                    attr.value = i;
+                    input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-type");
+                    attr.value = "urgent";
+                    input.setAttributeNode(attr);
+
+                    if (task[3] && task[3] == true)
+                        input.checked = true;
 
                     attr = document.createAttribute("class");
                     attr.value = i + " list-group-item";
@@ -248,7 +259,7 @@ function loadList(name) {
                     attr.value = "#urgentModal";
                     btn.setAttributeNode(attr);
 
-                    btn.innerHTML = tasks[i];
+                    btn.innerHTML = task[0];
 
                     attr = document.createAttribute("class");
                     attr.value = "badge";
@@ -292,6 +303,15 @@ function loadList(name) {
                     attr = document.createAttribute("onclick");
                     attr.value = "checkTask(this);";
                     input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-id");
+                    attr.value = i;
+                    input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-type");
+                    attr.value = "plan";
+                    input.setAttributeNode(attr);
+
+                    if (task[3] && task[3] == true)
+                    input.checked = true;
 
                     attr = document.createAttribute("class");
                     attr.value = i + " list-group-item";
@@ -375,6 +395,15 @@ function loadList(name) {
                     attr = document.createAttribute("onclick");
                     attr.value = "checkTask(this);";
                     input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-id");
+                    attr.value = i;
+                    input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-type");
+                    attr.value = "delegate";
+                    input.setAttributeNode(attr);
+
+                    if (task[3] && task[3] == true)
+                        input.checked = true;
 
                     attr = document.createAttribute("class");
                     attr.value = i + " list-group-item";
@@ -453,6 +482,8 @@ function loadList(name) {
 
                 for (var i in tasks) {
 
+                    task = tasks[i];
+                    
                     var li = document.createElement("li");
                     var input = document.createElement("input");
                     var link = document.createElement("a");
@@ -464,6 +495,15 @@ function loadList(name) {
                     attr = document.createAttribute("onclick");
                     attr.value = "checkTask(this);";
                     input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-id");
+                    attr.value = i;
+                    input.setAttributeNode(attr);
+                    attr = document.createAttribute("data-type");
+                    attr.value = "eliminate";
+                    input.setAttributeNode(attr);
+
+                    if (task[3] && task[3] == true)
+                        input.checked = true;
 
                     attr = document.createAttribute("class");
                     attr.value = i + " list-group-item";
@@ -478,7 +518,7 @@ function loadList(name) {
 
                     li.appendChild(input);
                     li.appendChild(span);
-                    li.appendChild(document.createTextNode(tasks[i]));
+                    li.appendChild(document.createTextNode(task[0]));
                     list.appendChild(li);
                 }
             }
@@ -1094,15 +1134,42 @@ function updateTask(form) {
     }
 
 }
-function checkTask(task) {
+function checkTask(box) {
 
-    var isChecked = task.checked;
+    // Stores the application data
+    var matrix = [];
+    var tasks = [];
+    var task = [];
+    var index = 0;
+
+    // Get the data from localStorage
+    matrix = JSON.parse(localStorage.getItem("matrix"));
+
+    if (box.dataset.type == 'urgent') {
+        index = 0;
+        task[1] = "";
+        task[2] = "";
+    } else if (box.dataset.type == 'plan')
+        index = 1;
+    else if (box.dataset.type == 'delegate')
+        index = 2;
+    else if (box.dataset.type == 'eliminate')
+        index = 3;
+
+    if (matrix[index] && matrix[index].length)
+        tasks = matrix[index];
+
+    task = tasks[box.dataset.id];
+    var isChecked = box.checked;
 
     if (isChecked) {
-        task.parentElement.style.textDecoration = "line-through";
+        task[3] = true;
     } else {
-        task.parentElement.style.textDecoration = "none";
+        task[3] = false;
     }
+
+    matrix[index] = tasks;
+    localStorage.setItem("matrix", JSON.stringify(matrix));
 
 }
 function clearList(name) {
