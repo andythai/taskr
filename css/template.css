@@ -1,0 +1,102 @@
+html {
+  font-size: 14px;
+}
+body {
+  padding-top: 50px;
+}
+.navbar-inverse .navbar-brand {
+  color: white;
+}
+#notices {
+  padding: 0;
+  text-align: center;
+}
+#matrix {
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+#matrix > div {
+  display: flex; 
+  flex-basis: 100%;  
+  justify-content: center;
+  flex-direction: column;
+}
+.box {
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+.box .header {
+  margin-bottom: 8px;
+}
+.box h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: white;
+}
+.box h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: white;
+}
+.box .action {
+  text-align: right;
+}
+.urgent { background-color: #f14141; }
+.plan { background-color: #3cb0ea }
+.delegate { background-color: #89b309; }
+.eliminate { background-color: grey; }
+.navbar-fixed-bottom {
+  padding: 10px 0;
+  background-color: #222;
+}
+.list-group-item {
+  padding: 5px 8px 5px 5px;
+}
+.box .body .badge {
+  padding: 5px 0;
+  background-color: white;
+}
+.list-group {
+  margin-bottom: 10px;
+}
+.box .body .badge .urgent {
+  background-color: white;
+}
+.box .body .badge .plan {
+  background-color: white;
+}
+.box .body .badge .delegate {
+  background-color: white;
+}
+.box .body .badge .eliminate {
+  background-color: white;
+}
+.box input[type=checkbox], input[type=radio] {
+  position: relative;
+  top: 2px;  
+}
+.box input[type=checkbox] {
+  margin: 4px 4px 0;
+}
+.box .body .btn-sm {
+  padding: 0;
+  border: none;
+}
+.box .body .date {
+
+  float: right;
+  margin-right: 10px;
+  font-size: .9rem;
+  margin-top: 3px;
+}
+.box .body .delegatedto {
+  
+    float: right;
+    margin-right: 10px;
+    font-size: .9rem;
+    margin-top: 3px;
+  }
