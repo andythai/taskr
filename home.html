@@ -1,926 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>CSE 170: A5 - Productivity Matrix</title>
-        <meta name="description" content="CSE 170 - Web App">
-        <meta name="keywords" content="CSE 170">
-        <meta name="author" content="Matrix">
-        <meta name="robots" content="noindex">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">    
-        <link rel="stylesheet" href="css/global.css">
-        <script>
-        
-            function init() {
 
-                /* Immediate & Urget */
-                var taskList = document.getElementById('iu-list');			
-			    var tasks = JSON.parse(localStorage.getItem("iu-tasks"));
-               
-			    for (var i in tasks){
-				    var li = document.createElement("li");
-                    var inp = document.createElement("input");
-                    var remlnk = document.createElement("a");
-
-                    var att = document.createAttribute("type");
-                    att.value = "checkbox";
-                    inp.setAttributeNode(att); 
-
-                    var att2 = document.createAttribute("class");
-                    att2.value = i;
-                    li.setAttributeNode(att2);         
-
-                    var att3 = document.createAttribute("onclick");
-                    att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);      
-
-                    var att4 = document.createAttribute("onclick");
-                    att4.value = "removeTask(this,1);";
-                    remlnk.setAttributeNode(att4);  
-                    remlnk.appendChild(document.createTextNode(" [X]"));
-
-                    li.appendChild(inp);
-				    li.appendChild(document.createTextNode(tasks[i]));
-                    li.appendChild(remlnk);
-				    taskList.appendChild(li);
-			    } 
-
-                /* Immediate & Not Urget */
-                var taskList = document.getElementById('inu-list');			
-			    var tasks = JSON.parse(localStorage.getItem("inu-tasks"));
-                var dates = JSON.parse(localStorage.getItem("inu-dates"));
-
-			    for (var i in tasks){
-				    var li = document.createElement("li");
-                    var inp = document.createElement("input");
-                    var remlnk = document.createElement("a");
-
-                    var att = document.createAttribute("type");
-                    att.value = "checkbox";
-                    inp.setAttributeNode(att); 
-
-                    var att2 = document.createAttribute("class");
-                    att2.value = i;
-                    li.setAttributeNode(att2);         
-
-                    var att3 = document.createAttribute("onclick");
-                    att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);
-
-                    var att4 = document.createAttribute("onclick");
-                    att4.value = "removeTask(this,2);";
-                    remlnk.setAttributeNode(att4);  
-                    remlnk.appendChild(document.createTextNode(" [X]"));
-
-                    li.appendChild(inp);
-				    li.appendChild(document.createTextNode(tasks[i] + " on " + dates[i]));
-                    li.appendChild(remlnk);
-				    taskList.appendChild(li);
-			    } 
-
-                /* Not Immediate & Urget */
-                var taskList = document.getElementById('niu-list');			
-			    var tasks = JSON.parse(localStorage.getItem("niu-tasks"));
-                var delegates = JSON.parse(localStorage.getItem("niu-delegates"));
-
-			    for (var i in tasks){
-				    var li = document.createElement("li");
-                    var inp = document.createElement("input");
-                    var remlnk = document.createElement("a");
-
-                    var att = document.createAttribute("type");
-                    att.value = "checkbox";
-                    inp.setAttributeNode(att); 
-
-                    var att2 = document.createAttribute("class");
-                    att2.value = i;
-                    li.setAttributeNode(att2);         
-
-                    var att3 = document.createAttribute("onclick");
-                    att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);
-
-                    var att4 = document.createAttribute("onclick");
-                    att4.value = "removeTask(this,3);";
-                    remlnk.setAttributeNode(att4);  
-                    remlnk.appendChild(document.createTextNode(" [X]"));
-
-                    li.appendChild(inp);
-				    li.appendChild(document.createTextNode(tasks[i] + " delegate to " + delegates[i]));
-                    li.appendChild(remlnk);
-				    taskList.appendChild(li);
-			    } 
-
-                /* Not Immediate & Not-Urget */
-                var taskList = document.getElementById('ninu-list');			
-			    var tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
-               
-			    for (var i in tasks){
-				    var li = document.createElement("li");
-                    var inp = document.createElement("input");
-                    var remlnk = document.createElement("a");
-
-                    var att = document.createAttribute("type");
-                    att.value = "checkbox";
-                    inp.setAttributeNode(att); 
-
-                    var att2 = document.createAttribute("class");
-                    att2.value = i;
-                    li.setAttributeNode(att2);         
-
-                    var att3 = document.createAttribute("onclick");
-                    att3.value = "checkTask(this);";
-                    li.setAttributeNode(att3);
-
-                    var att4 = document.createAttribute("onclick");
-                    att4.value = "removeTask(this,4);";
-                    remlnk.setAttributeNode(att4);
-                    remlnk.appendChild(document.createTextNode(" [X]"));
-
-                    li.appendChild(inp);
-				    li.appendChild(document.createTextNode(tasks[i]));
-                    li.appendChild(remlnk);
-				    taskList.appendChild(li);
-			    } 
-
-            }
-
-            function removeTask(task, type) {
-                //alert("Removing " + task.parentElement.className);
-                var index = task.parentElement.className;
-                var tasks = [];
-                var dates = [];
-                var delegates = [];
-
-                switch (type) {
-
-                    case 1:
-                        tasks = JSON.parse(localStorage.getItem("iu-tasks"));
-                        //alert("Removed task: " + tasks[index]);
-                        tasks.splice(index, 1);
-                        localStorage.setItem("iu-tasks", JSON.stringify(tasks));
-                    break;
-
-                    case 2:
-                        tasks = JSON.parse(localStorage.getItem("inu-tasks"));
-                        dates = JSON.parse(localStorage.getItem("inu-dates"));
-                        //alert("Removed task: " + tasks[index]);
-                        tasks.splice(index, 1);
-                        dates.splice(index, 1);
-                        localStorage.setItem("inu-tasks", JSON.stringify(tasks));
-                        localStorage.setItem("inu-dates", JSON.stringify(dates));
-                    break;
-
-                    case 3:
-                        tasks = JSON.parse(localStorage.getItem("niu-tasks"));
-                        delegates = JSON.parse(localStorage.getItem("niu-delegates"));
-                        //alert("Removed task: " + tasks[index]);
-                        tasks.splice(index, 1);
-                        delegates.splice(index, 1);
-                        localStorage.setItem("niu-tasks", JSON.stringify(tasks));
-                        localStorage.setItem("niu-delegates", JSON.stringify(delegates));
-                    break;
-
-                    case 4:
-                        tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
-                        //alert("Removed task: " + tasks[index]);
-                        tasks.splice(index, 1);
-                        localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
-                    break;
-
-                    default:
-                        alert("Unknown Case.");
-                }
-
-                task.parentElement.style.display = "none";
-                alert("Task was removed.");
-            }
-
-            function addTask(form, type) {
-
-                var tasks = [];
-                var dates = [];
-                var delegates = [];
-                var taskName = "";
-                var taskDate = "";
-                var taskDelegate = "";
-                var length = 0;
-
-                switch (type) {
-
-                    case 1:
-
-                        taskName = document.forms["formIU"]["name"].value;
-
-                        if (localStorage.getItem("iu-tasks") !== null) {
-                            tasks = JSON.parse(localStorage.getItem("iu-tasks"));
-                            length = tasks.length;
-                            tasks[length] = taskName;
-                            localStorage.setItem("iu-tasks", JSON.stringify(tasks));
-                            alert("Added new iu-task: " + taskName);
-                        }  else {
-
-                            // There are currently no tasks in the localStorage array
-                            length = 0;
-                            tasks[length] = taskName;
-                            localStorage.setItem("iu-tasks", JSON.stringify(tasks));
-                            alert("Added new iu-task: " + taskName);
-                        }    
-
-                        // Add the task to the list
-                        var taskList = document.getElementById('iu-list');	
-                        var li = document.createElement("li");
-                        var inp = document.createElement("input");
-                        var remlnk = document.createElement("a");
-
-                        var att1 = document.createAttribute("type");
-                        att1.value = "checkbox";
-                        inp.setAttributeNode(att1); 
-    
-                        var att2 = document.createAttribute("class");
-                        att2.value = length;
-                        li.setAttributeNode(att2);         
-    
-                        var att3 = document.createAttribute("onclick");
-                        att3.value = "checkTask(this);";
-                        li.setAttributeNode(att3);       
-
-                        var att4 = document.createAttribute("onclick");
-                        att4.value = "removeTask(this,1);";
-                        remlnk.setAttributeNode(att4);  
-                        remlnk.appendChild(document.createTextNode(" [X]"));
-
-                        li.appendChild(inp);
-				        li.appendChild(document.createTextNode(taskName));
-                        li.appendChild(remlnk);
-				        taskList.appendChild(li);
-
-                        // Clear form elements
-                        document.forms["formIU"]["name"].value = "";
-
-                    break;
-
-                    case 2:
-
-                        taskName = document.forms["formINU"]["name"].value;
-                        taskDate = document.forms["formINU"]["date"].value;
-
-                        if (localStorage.getItem("inu-tasks") !== null) {
-                            tasks = JSON.parse(localStorage.getItem("inu-tasks"));
-                            dates = JSON.parse(localStorage.getItem("inu-dates"));
-                            var length = tasks.length;
-                            tasks[length] = taskName;
-                            dates[length] = taskDate;
-                            localStorage.setItem("inu-tasks", JSON.stringify(tasks));
-                            localStorage.setItem("inu-dates", JSON.stringify(dates));
-                            alert("Added new inu-task: " + taskName);
-                        }  else {
-                            // There are currently no tasks in the localStorage array
-                            tasks[0] = taskName;
-                            dates[0] = taskDate;
-                            localStorage.setItem("inu-tasks", JSON.stringify(tasks));
-                            localStorage.setItem("inu-dates", JSON.stringify(dates));
-                            alert("Added new inu-task: " + taskName);
-                        }
-
-                        // Add the task to the list
-                        var taskList = document.getElementById('inu-list');	
-                        var li = document.createElement("li");
-                        var inp = document.createElement("input");
-                        var remlnk = document.createElement("a");
-
-                        var att1 = document.createAttribute("type");
-                        att1.value = "checkbox";
-                        inp.setAttributeNode(att1); 
-    
-                        var att2 = document.createAttribute("class");
-                        att2.value = "inu-";
-                        li.setAttributeNode(att2);         
-    
-                        var att3 = document.createAttribute("onclick");
-                        att3.value = "checkTask(this, 2);";
-                        li.setAttributeNode(att3);      
-    
-                        var att4 = document.createAttribute("onclick");
-                        att4.value = "removeTask(this, 2);";
-                        remlnk.setAttributeNode(att4);  
-                        remlnk.appendChild(document.createTextNode(" [X]"));
-
-                        li.appendChild(inp);
-                        li.appendChild(document.createTextNode(taskName + " on " + taskDate));
-                        li.appendChild(remlnk);
-                        taskList.appendChild(li);
-
-                        // Clear form elements
-                        document.forms["formINU"]["name"].value = "";                        
-                        document.forms["formINU"]["date"].value = "";   
-
-                    break;
-
-                    case 3:
-
-                        taskName = document.forms["formNIU"]["name"].value;
-                        taskDelegate = document.forms["formNIU"]["delegate"].value;
-
-                        if (localStorage.getItem("niu-tasks") !== null) {
-                            tasks = JSON.parse(localStorage.getItem("niu-tasks"));
-                            delegates = JSON.parse(localStorage.getItem("niu-delegates"));
-                            var length = tasks.length;
-                            tasks[length] = taskName;
-                            delegates[length] = taskDelegate;
-                            localStorage.setItem("niu-tasks", JSON.stringify(tasks));
-                            localStorage.setItem("niu-delegates", JSON.stringify(delegates));
-                            alert("Added new niu-task: " + taskName);
-                        }  else {
-                            // There are currently no tasks in the localStorage array
-                            tasks[0] = taskName;
-                            delegates[0] = taskDelegate;
-                            localStorage.setItem("niu-tasks", JSON.stringify(tasks));
-                            localStorage.setItem("niu-delegates", JSON.stringify(delegates));
-                            alert("Added new niu-task: " + taskName);
-                        }    
-
-                        // Add the task to the list
-                        var taskList = document.getElementById('niu-list');		
-                        var li = document.createElement("li");
-                        var inp = document.createElement("input");
-                        var remlnk = document.createElement("a");
-
-                        var att1 = document.createAttribute("type");
-                        att1.value = "checkbox";
-                        inp.setAttributeNode(att1); 
-
-                        var att2 = document.createAttribute("class");
-                        att2.value = "niu-";
-                        li.setAttributeNode(att2);         
-
-                        var att3 = document.createAttribute("onclick");
-                        att3.value = "checkTask(this);";
-                        li.setAttributeNode(att3);
-
-                        var att4 = document.createAttribute("onclick");
-                        att4.value = "removeTask(this, 3);";
-                        remlnk.setAttributeNode(att4);  
-                        remlnk.appendChild(document.createTextNode(" [X]"));
-
-                        li.appendChild(inp);
-				        li.appendChild(document.createTextNode(taskName + " delegate to " + taskDelegate));
-                        li.appendChild(remlnk);
-				        taskList.appendChild(li);
-
-                        // Clear form elements
-                        document.forms["formNIU"]["name"].value = "";                        
-                        document.forms["formNIU"]["delegate"].value = "";    
-
-                    break;
-
-                    case 4:
-
-                        taskName = document.forms["formNINU"]["name"].value;
-
-                        if (localStorage.getItem("ninu-tasks") !== null) {
-                            tasks = JSON.parse(localStorage.getItem("ninu-tasks"));
-                            var length = tasks.length;
-                            tasks[length] = taskName;
-                            localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
-                            alert("Added new ninu-task: " + taskName);
-                        }  else {
-                            // There are currently no tasks in the localStorage array
-                            tasks[0] = taskName;
-                            localStorage.setItem("ninu-tasks", JSON.stringify(tasks));
-                            alert("Added new ninu-task: " + taskName);
-                        }
-
-                        // Add the task to the list
-                        var taskList = document.getElementById('ninu-list');	
-                        var li = document.createElement("li");
-                        var inp = document.createElement("input");
-                        var remlnk = document.createElement("a");
-
-                        var att1 = document.createAttribute("type");
-                        att1.value = "checkbox";
-                        inp.setAttributeNode(att1); 
-
-                        var att2 = document.createAttribute("class");
-                        att2.value = "ninu-";
-                        li.setAttributeNode(att2);         
-
-                        var att3 = document.createAttribute("onclick");
-                        att3.value = "checkTask(this);";
-                        li.setAttributeNode(att3);
-
-                        var att4 = document.createAttribute("onclick");
-                        att4.value = "removeTask(this, 4);";
-                        remlnk.setAttributeNode(att4);  
-                        remlnk.appendChild(document.createTextNode(" [X]")); 
-
-                        li.appendChild(inp);
-				        li.appendChild(document.createTextNode(taskName));
-                        li.appendChild(remlnk);
-				        taskList.appendChild(li);
-
-                        // Clear form elements
-                        document.forms["formNINU"]["name"].value = "";                        
-
-                    break;
-
-                    default:
-                        alert("Unknown Case.");
-                }
-
-            }
-
-            function checkTask(task) {
-
-                var isChecked = task.firstElementChild.checked;
-
-                if (isChecked) {
-                    task.style.textDecoration = "line-through";
-                } else {
-                    task.style.textDecoration = "none";
-                }
-
-            }
-
-		    function togglePanel(type) {
-
-                if (type =='1')
-			        var panel = document.getElementById('panelIU');
-                else if (type == '2')
-                    var panel = document.getElementById('panelINU');
-                else if (type == '3')
-                    var panel = document.getElementById('panelNIU');
-                else if (type == '4')
-                    var panel = document.getElementById('panelNINU');
-
-    	        if (panel.style.display === '' || panel.style.display === 'none') {
-                    document.getElementById('panelIU').style.display = 'none';
-                    document.getElementById('panelINU').style.display = 'none';
-                    document.getElementById('panelNIU').style.display = 'none';
-                    document.getElementById('panelNINU').style.display = 'none';
-        	        panel.style.display = 'block';
-    	        } else {
-        	        panel.style.display = 'none';
-    		    }
-
-		    }
-        
-        </script>
-        <style>
-          * {
-              box-sizing: border-box; 
-          }
-          body {
-              display: flex;
-              min-height: 100vh;
-              flex-direction: column;
-              margin: 0;
-          }
-          header {
-              padding: 1.15rem;
-              background: black;
-              color: white;
-              height: 30%;
-              border-bottom: 1px solid black;
-          }
-          header h1 {
-              margin: 0;
-          }
-          menu {
-              margin: 0;
-              padding: 0;
-          }
-          menu ul {
-              margin: 0;
-              padding: 0;
-              display: flex;
-              list-style-type: none;
-          }
-          menu ul li {
-            padding: 8px 10px 2px 10px;
-            border: 1px solid black;
-            border-radius: 5px;
-            margin: 3px;
-          }
-          menu ul li.search {
-              width: 90%;
-              padding: 0 12px;
-          }
-          menu ul li.search input {
-              width: 90%;
-              height: 70%;
-              border: none;
-          }
-          menu ul li.search img {
-              position: relative;
-              top: 7px;
-              left: 12px;
-          }
-          main {
-              display: flex;
-              flex: 1;
-          }
-          main > section {
-              margin: 1rem;
-              flex: 1;
-              order: 1;
-          }        
-          #panelIU {
-              display: none;
-              flex: 0 0 25vw;
-              padding: 10px;
-              background: #EFEFEF;
-              border-right: 1px solid black;
-              order: 2;
-          }
-          #panelINU {
-              display: none;
-              flex: 0 0 25vw;
-              padding: 10px;
-              background: #EFEFEF;
-              border-right: 1px solid black;
-              order: 2;
-          }
-          #panelNIU {
-              display: none;
-              flex: 0 0 25vw;
-              padding: 10px;
-              background: #EFEFEF;
-              border-right: 1px solid black;
-              order: 2;
-          }
-          #panelNINU {
-              display: none;
-              flex: 0 0 25vw;
-              padding: 10px;
-              background: #EFEFEF;
-              border-right: 1px solid black;
-              order: 2;
-          }
-          main > nav ul {
-              flex: 0 0 15vw;
-              margin: 0;
-              padding: 0;
-              background: white;
-              order: 1;
-          }
-          main > nav li {
-              padding: 10px 10px;
-              border-bottom: 1px solid #000;
-              text-align: center;
-              list-style-type: none;
-          }
-          nav {
-              font-size: 1.5rem;
-          }
-          nav h2 {
-              font-size: 80%;
-              text-align: center;
-              margin: 0;
-          }
-          nav a {
-              color: black;
-              text-decoration: none;
-              font-size: 80%;
-          }
-          nav li p {
-              font-size: 60%;
-              margin: 0;
-          }
-          #dashboard {
-            border-radius: 10px;
-            border: 1px solid black;
-            padding: 10px;
-          }
-          #top-priorities {
-              list-style-type: none;
-              display: flex;
-              justify-content: center;
-              padding: 0;
-          }
-          #top-priorities li {
-              margin: 0 .5rem;
-          }
-          .index {
-              border: 1px solid black;
-              margin: 0 auto;
-              width: 1.5rem;
-              text-align: center;
-              margin-bottom: 10px;
-              font-size: 150%;
-              border-radius: 5px;
-          }
-          #new-task {
-              text-align: center;
-          }
-          #new-task button {
-              font-size: 120%;
-          }
-          .sticky {
-              border: 1px solid black;
-              background-color: yellow;
-              padding: 10px;
-          }
-          .sticky .message {
-              font-size: 140%;
-              font-weight: bold;
-              margin-top: 0;
-          }
-          .sticky .time {
-              text-align: right;
-              margin-bottom: 0;
-          }
-          #top-priorities li.first, #top-priorities li.last {
-              margin:0;
-          }
-          #normal-priorities {
-              list-style-type: none;
-              padding: 0;
-          }
-          #normal-priorities > li {
-              margin: .5rem 0 ;
-              border: 1px solid black;
-              padding: 1rem 0;
-          }
-          #normal-priorities li ul.item {
-              list-style-type: none;
-              display: flex;
-              font-size: 130%;
-              padding: 0 1rem;
-          }
-          #normal-priorities li ul.item li.number {
-              border: 1px solid black;
-              border-radius: 50%;
-              text-align: center;
-              margin-right: .75rem;
-              width: 5%;
-          }
-          #normal-priorities li ul.item li.name {
-              width: 70%;
-          }
-          #normal-priorities li ul.item li.duration {
-              width: 25%;
-          }
-          footer {
-              background: black;
-              color: white;
-              height: 5vh;
-              padding: .50rem;
-              text-align: center;
-          }
-          article, nav, aside {
-              padding: 1em;
-          }
-          input, select {
-              margin: 10px 0;
-          }
-          label {
-              display: block;
-          }
-
-#matrix-top-headers {
-    display: flex;
-
-}
-#matrix-top-headers > article {
-    display: flex;
-    flex-basis: calc(50% - 10px);
-    justify-content: center;
-}
-#matrix-top-headers > article h2 {
-    margin: 0;
-    font-weight: bold;
-}
-.matrix {
-  min-height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
-.matrix > article {
-  display: flex; 
-  flex-basis: calc(50% - 10px);  
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-.matrix > article > div {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-}
-.quadrant { margin: .250rem; }
-.quadrant h2 {    font-weight: bold;  }
-.q1 { background-color: rgb(216, 78, 78); }
-.box2 { background-color: #4c99d8; }
-.box3 { background-color: green; }
-.box4 { background-color: rgb(207, 178, 12); }
-
-.header {
-    border-bottom: 1px solid black;
-}
-.header .left {
-    float: left;
-}
-.header .right {
-    float: right;
-}
-.header h2 {
-    margin: 0;
-    padding: 5px 5px 0 5px;
-}
-.header h3 {
-    margin: 0;
-    padding: 0 5px 5px 5px;
-}
-#q1-list {
-    list-style-type: none;
-}
-
-#iu-list li input { 
-    margin-right: 6px;
-}
-
-button {
-    padding: 12px;
-}
-
-#iu-list a, #inu-list a, #niu-list a, #ninu-list a {
-    color: blue;
-}
-
-
-          @media only screen and (max-width: 500px) {
-              body {
-
-              }
-              header {
-                  text-align: center;
-                  padding: .75rem;
-              }
-              nav {
-                  padding: 0;
-              }
-              nav > h2 {
-                  margin: 0;
-              }
-              nav > ul {
-                  margin: 0;
-                  padding: 0;
-                  list-style-type: none;
-              }
-              #main {
-                  flex-direction: column;
-                  text-align: center;
-              }
-              #main > article {
-                  padding: 0 1rem 1em 1em;
-              }
-              menu ul {
-                  justify-content: center;
-              }
-              menu ul li {
-                  padding: 7px 4px 0px 4px;
-              }
-              menu ul li.search {
-                  /*padding: 8px 10px 2px 10px;*/
-                  padding: 7px 4px 0px 4px;
-                  width: unset;
-              }
-              menu ul li.search input {
-                  display: none;
-              }
-              menu ul li.search img {
-                  position:unset;
-              }
-              #top-priorities {
-                  flex-direction: column;
-              }
-              #top-priorities li {
-                  margin: 8px 0;
-              }
-              #top-priorities .index {
-                  display: none;
-              }
-              #normal-priorities li ul.item li.index {
-                  display: none;
-              }
-              #normal-priorities li ul.item li.duration {
-                  text-align: right;
-              }
-          }
-        </style>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/template.css" rel="stylesheet">
+
+    <!-- Custom javascript for functionality -->
+    <script src="js/template.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body onload="init()">
-  <header>
-      <h1 style="float: left;">Productivity Matrix - Dashboard</h1>
-      <div style="float: right"><a href="/">Logout</a></div>
-  </header>
-  <main>
-    <section id="dashboard">
-        <section class="matrix">
-            <article class="quadrant q1">
-                <section class="header">
-                    <section class="left">
-                        <h2>Immediate & Urgent</h2>
-                        <h3>Do it now</h3>
-                    </section>
-                    <section class="right"><button onclick="togglePanel('1')">(+) New Task</button></section>
-                </section>
-                <section class="body">
-                    <ol id="iu-list"></ol>
-                </section>
-            </article>
-            <article class="quadrant box2">
-                <section class="header">
-                    <section class="left">
-                        <h2>Immediate & Not Urgent</h2>
-                        <h3>Decide when to do it</h3>
-                    </section>
-                    <section class="right"><button onclick="togglePanel('2')">(+) New Task</button></section>   
-                </section>                
-                <section class="body">
-                    <ol id="inu-list"></ol>
-                </section>
-            </article>
-            <article class="quadrant box3">
-                <section class="header">
-                    <section class="left">
-                        <h2>Not Immediate & Urgent</h2>
-                        <h3>Delegate it to someone else</h3>
-                    </section>
-                    <section class="right"><button onclick="togglePanel('3')">(+) New Task</button></section>                       
-                </section>                
-                <section class="body">
-                    <ol id="niu-list"></ol>
-                </section>
-            </article>
-            <article class="quadrant box4">
-                <section class="header">
-                    <section class="left">
-                        <h2>Not Immediate & Not Urgent</h2>
-                        <h3>Do later or delete</h3>
-                    </section>
-                    <section class="right"><button onclick="togglePanel('4')">(+) New Task</button></section>    
-                </section>                
-                <section class="body">
-                    <ol id="ninu-list"></ol>
-                </section>
-            </article>
-        </section>
 
-    </section>
-    <aside id="panelIU">
-        <h2>Immediate & Urgent (Do it now)</h2>
-        <h3>Add a Task</h3>
-        <form name="formIU" method="post">
-            <label>Title</label>
-            <input type="text" name="name" /><br>
-            <br>
-            <input type="button" value="Add Task" onclick="addTask(this, 1)" />
-        </form>
-    </aside>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Productivity Matrix</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="home.html">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="profile.html">Profile</a>
+                    </li>
+                    <li>
+                        <a href="settings.html">Settings</a>
+                    </li>
+                    <li>
+                        <a href="index.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
 
-    <aside id="panelINU">
-        <h2>Immediate & Not-Urgent (Decide When To Do It)</h2>
-        <h3>Add a Task</h3>
-        <form name="formINU" method="post">
-            <label>Title</label>
-            <input type="text" name="name" /><br>
-            <label>Date</label>
-            <input name="date" type="date">
-            <br>
-            <input type="button" value="Add Task" onclick="addTask(this, 2)" />
-        </form>
-    </aside>
+    <div class="container">
 
-    <aside id="panelNIU">
-        <h2>Not Immediate & Urgent</h2>
-        <h3>Add a Task</h3>
-        <form name="formNIU" method="post">
-            <label>Task name:</label>
-            <input type="text" name="name" /><br>
-            <label>Person to delegate to:</label>
-            <input name="delegate" type="text">
-            <br>
-            <input type="button" value="Add Task" onclick="addTask(this, 3)" />
-        </form>
-    </aside>
+        <div id="notices">
+            <h1 id="welcome">Welcome, demo.</h1>
+            <p id="taskcount">Let's make today productive!</p>
+        </div>
+        <div id="matrix">
+            <div id="urgentBox" class="box urgent">
+                <div class="header">
+                    <h2>Urgent</h2>
+                    <h3>Do now.</h3>
+                </div>
+                <div class="body">
+                    <ul id="urgentList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#urgentModal">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                    </button>         
+                </div>      
+            </div>
+            <div id="planBox" class="box plan">
+                <div class="header">
+                    <h2>Plan</h2>
+                    <h3>Plan for the future.</h3>
+                </div>
+                <div class="body">
+                    <ul id="planList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#planModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>         
+                    </div>    
+            </div>
+            <div id="delegateBox" class="box delegate">
+                <div class="header">
+                    <h2>Delegate</h2>
+                    <h3>Get help from others.</h3>
+                </div>
+                <div class="body">
+                    <ul id="delegateList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#delegateModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>         
+                </div>    
+            </div>
+            <div id="eliminateBox" class="box eliminate">
+                <div class="header">
+                    <h2>Eliminate</h2>
+                    <h3>Things to stop doing.</h3>
+                </div>
+                <div class="body">
+                    <ul id="eliminateList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#eliminateModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>         
+                    </div>    
+            </div>
+        </div>
 
-    <aside id="panelNINU">
-        <h2>Not Immediate & Not-Urgent</h2>
-        <h3>Add a Task</h3>
-        <form name="formNINU" method="post">
-            <label>Task name:</label>
-            <input type="text" name="name" /><br>
-            <br>
-            <input type="button" value="Add Task" onclick="addTask(this, 4)" />
-        </form>
-    </aside>
+        <!-- Urgent Modal -->
+        <div class="modal fade" id="urgentModal" tabindex="-1" role="dialog" aria-labelledby="urgentModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="urgentModalLabel">Add Urgent Task</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form id="urgent" name="urgent" method="POST">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="tid" value="">
+                            <div class="form-group">
+                                <label for="name">Task</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="addTask('urgent')" data-dismiss="modal">Save changes</button>
+                        </div>
+                </div>
+            </div>
+        </div>
 
-    </main>
-    <footer>
-      &copy; 2017 Team Matrix CSE 170
-    </footer>
+                <!-- Plan Modal -->
+                <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="planModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="planModalLabel">Add Urgent Task</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form id="plan" name="plan" method="POST">
+                                            <input type="hidden" name="action" value="new">
+                                            <input type="hidden" name="tid" value="">                                          
+                                        <div class="form-group">
+                                            <label for="name">Task</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date">Date</label>
+                                            <input type="date" class="form-control" id="date" required>
+                                        </div>
+                                      </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" onclick="addTask('plan')" data-dismiss="modal">Save changes</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Delegate Modal -->
+                <div class="modal fade" id="delegateModal" tabindex="-1" role="dialog" aria-labelledby="delegateModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="delegateModalLabel">Add Delegated Task</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form id="delegate" name="delegate" method="POST">
+                                        <input type="hidden" name="action" value="new">
+                                        <input type="hidden" name="tid" value="">                                              
+                                        <div class="form-group">
+                                            <label for="name">Task</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Enter task name...">
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="date">Date</label>
+                                                <input type="date" class="form-control" id="date" required>
+                                            </div>                                        
+                                        <div class="form-group">
+                                            <label for="other">Delegate to</label>
+                                            <input type="text" class="form-control" id="other" name="other" placeholder="Enter their name...">
+                                        </div> 
+                                    </form>                                     
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" onclick="addTask('delegate')" data-dismiss="modal">Save changes</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Eliminate Modal -->
+                <div class="modal fade" id="eliminateModal" tabindex="-1" role="dialog" aria-labelledby="eliminateModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="eliminateModalLabel">Add Urgent Task</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <form id="eliminate" name="eliminate" method="POST">
+                                        <input type="hidden" name="action" value="new">
+                                        <input type="hidden" name="tid" value="">                                              
+                                        <div class="form-group">
+                                            <label for="name">Task</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Enter task name...">
+                                        </div>
+                                      </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" onclick="addTask('eliminate')" data-dismiss="modal">Save changes</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        Tasks
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <li>
+                            <a href="#">Active</a>
+                        </li>
+                        <li>
+                            <a href="#">Completed</a>
+                        </li>
+                        <li>
+                            <a href="#">Deleted</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+    <!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
+
 </html>

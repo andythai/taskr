@@ -24,22 +24,21 @@
 
     <div class="container">
       <h1 id="title">Productivity Matrix</h1>
-      <form id="login" class="form-signin" action="home.html" method="POST" onsubmit="return validateLogin()">
-        <h2 class="form-signin-heading">Please sign in</h2>
+      <form id="login" class="form-signin" action="index.html" method="POST" onsubmit="return validRegistration()">
+        <h2 class="form-signin-heading">Register today.</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
           <label>
-            <input type="checkbox" value="remember-me"> Remember me
+            <input type="checkbox" value="remember-me"> Receive periodic news and updates?
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </form>
-      <p class="register">Need an account? <a href="register.html">Register now.</a></p>
-      <p id="notification"></p>
-      <p style="text-align: center"><strong>For demo purposes, please use:</strong></p>
+      <p class="register">Already have an account? <a href="index.html">Please login.</a></p>
+      <p style="text-align: center"><strong>For demo purposes, please register using:</strong></p>
       <p style="text-align: center">Username: demo@test.com<br>Password: demo</p>
 
     </div> <!-- /container -->
