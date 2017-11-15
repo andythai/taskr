@@ -890,15 +890,15 @@ function addTask(type) {
             if (tother) {
                 attr = document.createAttribute("class");
                 attr.value = "delegatedto";
-                div1.setAttributeNode(attr);
-                div1.innerHTML = tother;
+                div2.setAttributeNode(attr);
+                div2.innerHTML = tother;
             }
 
             if (tdate) {
                 attr = document.createAttribute("class");
                 attr.value = "date";
-                div2.setAttributeNode(attr);
-                div2.innerHTML = tdate;
+                div1.setAttributeNode(attr);
+                div1.innerHTML = tdate;
             }
 
             attr = document.createAttribute("class");
