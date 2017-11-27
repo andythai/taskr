@@ -1,3 +1,195 @@
+function setTaskViewingStatus(name) {
+
+    // Stores the application data
+    var matrix = [];
+    var globals = [];
+
+    // Get the data from localStorage
+    matrix = JSON.parse(localStorage.getItem("matrix"));
+
+    if (!(matrix && matrix.length))
+        matrix = [];
+
+    globals = matrix[6];
+
+    if (!(globals && globals.length))
+        globals = [];
+
+    switch (name) {
+        case "current":
+            globals[1] = name;
+            matrix[6] = globals;
+            localStorage.setItem('matrix', JSON.stringify(matrix));
+            break;
+
+        case "completed":
+            globals[1] = name;
+            matrix[6] = globals;
+            localStorage.setItem('matrix', JSON.stringify(matrix));
+            break;
+
+        case "deleted":
+            globals[1] = name;
+            matrix[6] = globals;
+            localStorage.setItem('matrix', JSON.stringify(matrix));
+            break;
+
+    }
+
+    clearList("urgent");
+    loadList("urgent");
+
+    clearList("plan");
+    loadList("plan");
+
+    clearList("delegate");
+    loadList("delegate");
+
+    clearList("eliminate");
+    loadList("eliminate");
+
+}
+function newTask(type) {
+
+    switch (type) {
+
+        case "urgent":
+
+            // Set the modal title to match the action
+            document.getElementById("urgentModalLabel").innerText = "New Urgent Task";
+
+            // Clear form fields
+            document.forms["urgent"]["name"].value = "";
+            document.forms["urgent"]["priority"].value = "";
+            document.forms["urgent"]["time"].value = "";
+
+            break;
+
+        case "plan":
+
+            // Set the modal title to match the action
+            document.getElementById("planModalLabel").innerText = "New Planned Task";
+
+            // Clear form fields
+            document.forms["plan"]["name"].value = "";
+            document.forms["plan"]["priority"].value = "";
+            document.forms["plan"]["date"].value = "";
+
+            break;
+
+        case "delegate":
+
+            // Set the modal title to match the action
+            document.getElementById("delegateModalLabel").innerText = "New Delegated Task";
+
+            // Clear form fields
+            document.forms["delegate"]["name"].value = "";
+            document.forms["delegate"]["priority"].value = "";
+            document.forms["delegate"]["date"].value = "";
+            document.forms["delegate"]["other"].value = "";
+
+            break;
+
+        case "eliminate":
+
+            // Set the modal title to match the action
+            document.getElementById("eliminateModalLabel").innerText = "New Eliminate Task";
+
+            // Clear form fields
+            document.forms["eliminate"]["name"].value = "";
+
+            break;
+
+    }
+
+}
+
+function loadTask(item) {
+
+    // Stores the application data
+    var matrix = [];
+    var tasks = [];
+    var id = item.dataset.id;
+    var task = [];
+
+    // Get the data from localStorage
+    matrix = JSON.parse(localStorage.getItem("matrix"));
+
+    if (!(matrix && matrix.length))
+        matrix = [];
+
+    switch (item.dataset.type) {
+
+        case "urgent":
+
+            tasks = matrix[0];
+            task = tasks[id];
+
+            // Set the modal title to match the action
+            document.getElementById("urgentModalLabel").innerText = "Update Urgent Task";
+
+            // Populate form fields
+            document.forms["urgent"]["tid"].value = id;
+            document.forms["urgent"]["name"].value = task[1];
+            document.forms["urgent"]["priority"].value = task[2];
+            document.forms["urgent"]["time"].value = task[5];            
+            document.forms["urgent"]["action"].value = "update";
+
+            break;
+
+        case "plan":
+
+            tasks = matrix[1];
+            task = tasks[id];
+
+            // Set the modal title to match the action
+            document.getElementById("planModalLabel").innerText = "Update Planned Task";
+
+            // Populate form fields
+            document.forms["plan"]["tid"].value = id;
+            document.forms["plan"]["name"].value = task[1];
+            document.forms["plan"]["priority"].value = task[2];
+            document.forms["plan"]["date"].value = task[4];
+            document.forms["plan"]["action"].value = "update";
+
+            break;
+
+        case "delegate":
+
+            tasks = matrix[2];
+            task = tasks[id];
+
+            // Set the modal title to match the action
+            document.getElementById("delegateModalLabel").innerText = "Update Delegated Task";
+
+            // Populate form fields
+            document.forms["delegate"]["tid"].value = id;
+            document.forms["delegate"]["name"].value = task[1];
+            document.forms["delegate"]["priority"].value = task[2];
+            document.forms["delegate"]["date"].value = task[4];
+            document.forms["delegate"]["other"].value = task[5];
+            document.forms["delegate"]["action"].value = "update";
+
+            break;
+
+        case "eliminate":
+
+            tasks = matrix[3];
+            task = tasks[id];
+
+            // Set the modal title to match the action
+            document.getElementById("eliminateModalLabel").innerText = "Update Eliminate Task";
+
+            // Populate form fields
+            document.forms["eliminate"]["tid"].value = id;
+            document.forms["eliminate"]["name"].value = task[1];
+            document.forms["eliminate"]["action"].value = "update";
+
+            break;
+
+    }
+
+}
 function validateLogin() {
 
     var username = document.forms["login"]["inputEmail"].value;
@@ -6,7 +198,7 @@ function validateLogin() {
     if (username == 'demo@test.com' && password == 'demo')
         return true;
 
-    document.getElementById("notification").innerText =" Invalid login and/or password combination.";
+    document.getElementById("notification").innerText = " Invalid login and/or password combination.";
     document.forms["login"]["inputEmail"].value = "";
     document.forms["login"]["inputPassword"].value = "";
 
@@ -40,7 +232,7 @@ function loadSettings() {
 
     if (settings[3])
         document.forms["settings"]["eliminateBGColor"].value = settings[3];
-    
+
 }
 function saveSettings() {
 
@@ -67,7 +259,7 @@ function saveSettings() {
 }
 
 function loadProfile() {
- 
+
     var matrix = [];
     var profile = [];
 
@@ -111,7 +303,7 @@ function saveProfile() {
 }
 
 
-function loadTask(listItem) {
+function updateTask(listItem) {
 
     // Stores the application data
     var matrix = [];
@@ -135,7 +327,9 @@ function loadTask(listItem) {
 
             // Populate form fields
             document.forms["urgent"]["tid"].value = id;
-            document.forms["urgent"]["name"].value = task[0];
+            document.forms["urgent"]["name"].value = task[1];
+            document.forms["urgent"]["priority"].value = task[2];
+            document.forms["urgent"]["time"].value = task[5];            
             document.forms["urgent"]["action"].value = "update";
 
             break;
@@ -147,8 +341,9 @@ function loadTask(listItem) {
 
             // Populate form fields
             document.forms["plan"]["tid"].value = id;
-            document.forms["plan"]["name"].value = task[0];
-            document.forms["plan"]["date"].value = task[1];
+            document.forms["plan"]["name"].value = task[1];
+            document.forms["plan"]["priority"].value = task[2];
+            document.forms["plan"]["date"].value = task[4];
             document.forms["plan"]["action"].value = "update";
 
             break;
@@ -160,24 +355,25 @@ function loadTask(listItem) {
 
             // Populate form fields
             document.forms["delegate"]["tid"].value = id;
-            document.forms["delegate"]["name"].value = task[0];
-            document.forms["delegate"]["date"].value = task[1];
-            document.forms["delegate"]["other"].value = task[2];
+            document.forms["delegate"]["name"].value = task[1];
+            document.forms["delegate"]["priority"].value = task[2];
+            document.forms["delegate"]["date"].value = task[4];
+            document.forms["delegate"]["other"].value = task[5];
             document.forms["delegate"]["action"].value = "update";
 
             break;
 
-            case "eliminate":
-            
-                        tasks = matrix[3];
-                        task = tasks[id];
-            
-                        // Populate form fields
-                        document.forms["eliminate"]["tid"].value = id;
-                        document.forms["eliminate"]["name"].value = task[0];
-                        document.forms["eliminate"]["action"].value = "update";
-            
-                        break;
+        case "eliminate":
+
+            tasks = matrix[3];
+            task = tasks[id];
+
+            // Populate form fields
+            document.forms["eliminate"]["tid"].value = id;
+            document.forms["eliminate"]["name"].value = task[1];
+            document.forms["eliminate"]["action"].value = "update";
+
+            break;
 
     }
 
@@ -186,14 +382,23 @@ function loadList(name) {
 
     // Stores the application data
     var matrix = [];
+    var globals = [];
     var tasks = [];
     var task = [];
+    var view = "";
 
     // Get the data from localStorage
     matrix = JSON.parse(localStorage.getItem("matrix"));
 
     if (!(matrix && matrix.length))
         matrix = [];
+
+    globals = matrix[6];
+
+    if (!(globals && globals.length))
+        globals = [];
+
+    view = globals[1];
 
     switch (name) {
 
@@ -210,68 +415,95 @@ function loadList(name) {
 
                     task = tasks[i];
 
-                    var li = document.createElement("li");
-                    var input = document.createElement("input");
-                    var btn = document.createElement("button");
-                    var span = document.createElement("span");
+                    if (task[3] == view) {
 
-                    var attr = document.createAttribute("type");
-                    attr.value = "checkbox";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("onclick");
-                    attr.value = "checkTask(this);";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-type");
-                    attr.value = "urgent";
-                    input.setAttributeNode(attr);
+                        var li = document.createElement("li");
+                        var input = document.createElement("input");
+                        var btn = document.createElement("button");
+                        var span = document.createElement("span");
+                        var div = document.createElement("div");
+                        var attr = "";
 
-                    if (task[3] && task[3] == true)
-                        input.checked = true;
+                        if (view != "deleted") {
 
-                    attr = document.createAttribute("class");
-                    attr.value = i + " list-group-item";
-                    li.setAttributeNode(attr);
+                            attr = document.createAttribute("type");
+                            attr.value = "checkbox";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("onclick");
+                            attr.value = "checkTask(this);";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-type");
+                            attr.value = "urgent";
+                            input.setAttributeNode(attr);
 
-                    attr = document.createAttribute("class");
-                    attr.value = "btn btn-default btn-sm";
-                    btn.setAttributeNode(attr);
+                            if (task[3] && task[3] == "completed")
+                                input.checked = true;
 
-                    attr = document.createAttribute("onclick");
-                    attr.value = "loadTask(this);";
-                    btn.setAttributeNode(attr);
+                        }
 
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    btn.setAttributeNode(attr);
+                        attr = document.createAttribute("class");
+                        attr.value = i + " list-group-item";
+                        li.setAttributeNode(attr);
 
-                    attr = document.createAttribute("data-type");
-                    attr.value = "urgent";
-                    btn.setAttributeNode(attr);
+                        attr = document.createAttribute("class");
+                        attr.value = "btn btn-default btn-sm";
+                        btn.setAttributeNode(attr);
 
-                    attr = document.createAttribute("data-toggle");
-                    attr.value = "modal";
-                    btn.setAttributeNode(attr);
+                        if (view != "deleted") {
 
-                    attr = document.createAttribute("data-target");
-                    attr.value = "#urgentModal";
-                    btn.setAttributeNode(attr);
+                            attr = document.createAttribute("onclick");
+                            attr.value = "loadTask(this);";
+                            btn.setAttributeNode(attr);
 
-                    btn.innerHTML = task[0];
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            btn.setAttributeNode(attr);
 
-                    attr = document.createAttribute("class");
-                    attr.value = "badge";
-                    span.setAttributeNode(attr);
+                            attr = document.createAttribute("data-type");
+                            attr.value = "urgent";
+                            btn.setAttributeNode(attr);
 
-                    span.setAttribute("class", "badge");
-                    span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="urgent">X</a>';
+                            attr = document.createAttribute("data-toggle");
+                            attr.value = "modal";
+                            btn.setAttributeNode(attr);
 
-                    li.appendChild(input);
-                    li.appendChild(span);
-                    li.appendChild(btn);
-                    list.appendChild(li);
+                            attr = document.createAttribute("data-target");
+                            attr.value = "#urgentModal";
+                            btn.setAttributeNode(attr);
+
+                        }
+
+                        btn.innerHTML = task[1];
+
+                        if (task[3] && task[3] == "completed")
+                            btn.style.textDecoration = "line-through";
+
+                            if (task[5]) {
+                                attr = document.createAttribute("class");
+                                attr.value = "date";
+                                div.setAttributeNode(attr);
+                                div.innerHTML = task[5];
+                            }                            
+
+                        attr = document.createAttribute("class");
+                        attr.value = "badge";
+                        span.setAttributeNode(attr);
+
+                        span.setAttribute("class", "badge");
+                        span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="urgent">X</a>';
+
+                        if (view != "deleted")
+                            li.appendChild(input);
+                        li.appendChild(span);
+                        li.appendChild(btn);
+                        if (task[5])
+                            li.appendChild(div);                        
+                        list.appendChild(li);
+
+                    }
 
                 }
             }
@@ -291,78 +523,95 @@ function loadList(name) {
 
                     task = tasks[i];
 
-                    var li = document.createElement("li");
-                    var input = document.createElement("input");
-                    var btn = document.createElement("button");
-                    var span = document.createElement("span");
-                    var div = document.createElement("div");
+                    if (task[3] == view) {
 
-                    var attr = document.createAttribute("type");
-                    attr.value = "checkbox";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("onclick");
-                    attr.value = "checkTask(this);";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-type");
-                    attr.value = "plan";
-                    input.setAttributeNode(attr);
+                        var li = document.createElement("li");
+                        var input = document.createElement("input");
+                        var btn = document.createElement("button");
+                        var span = document.createElement("span");
+                        var div = document.createElement("div");
+                        var attr = "";
 
-                    if (task[3] && task[3] == true)
-                    input.checked = true;
+                        if (view != "deleted") {
 
-                    attr = document.createAttribute("class");
-                    attr.value = i + " list-group-item";
-                    li.setAttributeNode(attr);
+                            attr = document.createAttribute("type");
+                            attr.value = "checkbox";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("onclick");
+                            attr.value = "checkTask(this);";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-type");
+                            attr.value = "plan";
+                            input.setAttributeNode(attr);
 
-                    attr = document.createAttribute("class");
-                    attr.value = "btn btn-default btn-sm";
-                    btn.setAttributeNode(attr);
+                            if (task[3] && task[3] == "completed")
+                                input.checked = true;
 
-                    attr = document.createAttribute("onclick");
-                    attr.value = "loadTask(this);";
-                    btn.setAttributeNode(attr);
+                        }
 
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    btn.setAttributeNode(attr);
-
-                    attr = document.createAttribute("data-type");
-                    attr.value = "plan";
-                    btn.setAttributeNode(attr);
-
-                    attr = document.createAttribute("data-toggle");
-                    attr.value = "modal";
-                    btn.setAttributeNode(attr);
-
-                    attr = document.createAttribute("data-target");
-                    attr.value = "#planModal";
-                    btn.setAttributeNode(attr);
-
-                    btn.innerHTML = task[0];
-
-                    if (task[1]) {
                         attr = document.createAttribute("class");
-                        attr.value = "date";
-                        div.setAttributeNode(attr);
-                        div.innerHTML = task[1];
+                        attr.value = i + " list-group-item";
+                        li.setAttributeNode(attr);
+
+                        attr = document.createAttribute("class");
+                        attr.value = "btn btn-default btn-sm";
+                        btn.setAttributeNode(attr);
+
+                        if (view != "deleted") {
+
+                            attr = document.createAttribute("onclick");
+                            attr.value = "loadTask(this);";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-type");
+                            attr.value = "plan";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-toggle");
+                            attr.value = "modal";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-target");
+                            attr.value = "#planModal";
+                            btn.setAttributeNode(attr);
+
+                        }
+
+                        btn.innerHTML = task[1];
+
+                        if (task[3] && task[3] == "completed")
+                            btn.style.textDecoration = "line-through";
+
+                        if (task[4]) {
+                            attr = document.createAttribute("class");
+                            attr.value = "date";
+                            div.setAttributeNode(attr);
+                            div.innerHTML = task[4];
+                        }
+
+                        attr = document.createAttribute("class");
+                        attr.value = "badge";
+                        span.setAttributeNode(attr);
+
+                        span.setAttribute("class", "badge");
+                        span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="plan">X</a>';
+
+                        if (view != "deleted")
+                            li.appendChild(input);
+                        li.appendChild(span);
+                        li.appendChild(btn);
+                        if (task[4])
+                            li.appendChild(div);
+                        list.appendChild(li);
+
                     }
-
-                    attr = document.createAttribute("class");
-                    attr.value = "badge";
-                    span.setAttributeNode(attr);
-
-                    span.setAttribute("class", "badge");
-                    span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="plan">X</a>';
-
-                    li.appendChild(input);
-                    li.appendChild(span);
-                    li.appendChild(btn);
-                    if (task[1])
-                        li.appendChild(div);
-                    list.appendChild(li);
 
                 }
             }
@@ -382,89 +631,106 @@ function loadList(name) {
 
                     task = tasks[i];
 
-                    var li = document.createElement("li");
-                    var input = document.createElement("input");
-                    var btn = document.createElement("button");
-                    var span = document.createElement("span");
-                    var div1 = document.createElement("div");
-                    var div2 = document.createElement("div");
+                    if (task[3] == view) {
 
-                    var attr = document.createAttribute("type");
-                    attr.value = "checkbox";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("onclick");
-                    attr.value = "checkTask(this);";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-type");
-                    attr.value = "delegate";
-                    input.setAttributeNode(attr);
+                        var li = document.createElement("li");
+                        var input = document.createElement("input");
+                        var btn = document.createElement("button");
+                        var span = document.createElement("span");
+                        var div1 = document.createElement("div");
+                        var div2 = document.createElement("div");
+                        var attr = "";
 
-                    if (task[3] && task[3] == true)
-                        input.checked = true;
+                        if (view != "deleted") {
 
-                    attr = document.createAttribute("class");
-                    attr.value = i + " list-group-item";
-                    li.setAttributeNode(attr);
+                            attr = document.createAttribute("type");
+                            attr.value = "checkbox";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("onclick");
+                            attr.value = "checkTask(this);";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-type");
+                            attr.value = "delegate";
+                            input.setAttributeNode(attr);
 
-                    attr = document.createAttribute("class");
-                    attr.value = "btn btn-default btn-sm";
-                    btn.setAttributeNode(attr);
+                            if (task[3] && task[3] == "completed")
+                                input.checked = true;
 
-                    attr = document.createAttribute("onclick");
-                    attr.value = "loadTask(this);";
-                    btn.setAttributeNode(attr);
+                        }
 
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    btn.setAttributeNode(attr);
-
-                    attr = document.createAttribute("data-type");
-                    attr.value = "delegate";
-                    btn.setAttributeNode(attr);
-
-                    attr = document.createAttribute("data-toggle");
-                    attr.value = "modal";
-                    btn.setAttributeNode(attr);
-
-                    attr = document.createAttribute("data-target");
-                    attr.value = "#delegateModal";
-                    btn.setAttributeNode(attr);
-
-                    btn.innerHTML = task[0];
-
-                    if (task[2]) {
                         attr = document.createAttribute("class");
-                        attr.value = "delegatedto";
-                        div2.setAttributeNode(attr);
-                        div2.innerHTML = task[2];
-                    }
+                        attr.value = i + " list-group-item";
+                        li.setAttributeNode(attr);
 
-                    if (task[1]) {
                         attr = document.createAttribute("class");
-                        attr.value = "date";
-                        div1.setAttributeNode(attr);
-                        div1.innerHTML = task[1];
-                    }
+                        attr.value = "btn btn-default btn-sm";
+                        btn.setAttributeNode(attr);
 
-                    attr = document.createAttribute("class");
-                    attr.value = "badge";
-                    span.setAttributeNode(attr);
+                        if (view != "deleted") {
 
-                    span.setAttribute("class", "badge");
-                    span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="delegate">X</a>';
+                            attr = document.createAttribute("onclick");
+                            attr.value = "loadTask(this);";
+                            btn.setAttributeNode(attr);
 
-                    li.appendChild(input);
-                    li.appendChild(span);
-                    li.appendChild(btn);
-                    if (task[2])
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-type");
+                            attr.value = "delegate";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-toggle");
+                            attr.value = "modal";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-target");
+                            attr.value = "#delegateModal";
+                            btn.setAttributeNode(attr);
+
+                        }
+
+                        btn.innerHTML = task[1];
+
+                        if (task[3] && task[3] == "completed")
+                            btn.style.textDecoration = "line-through";
+
+                        if (task[5]) {
+                            attr = document.createAttribute("class");
+                            attr.value = "delegatedto";
+                            div2.setAttributeNode(attr);
+                            div2.innerHTML = task[5];
+                        }
+
+                        if (task[4]) {
+                            attr = document.createAttribute("class");
+                            attr.value = "date";
+                            div1.setAttributeNode(attr);
+                            div1.innerHTML = task[4];
+                        }
+
+                        attr = document.createAttribute("class");
+                        attr.value = "badge";
+                        span.setAttributeNode(attr);
+
+                        span.setAttribute("class", "badge");
+                        span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="delegate">X</a>';
+
+                        if (view != "deleted")
+                            li.appendChild(input);
+                        li.appendChild(span);
+                        li.appendChild(btn);
+                        if (task[5])
+                            li.appendChild(div2);
+                        if (task[4])
+                            li.appendChild(div1);
                         li.appendChild(div2);
-                    if (task[1])
-                        li.appendChild(div1);                  
-                    li.appendChild(div2);
-                    list.appendChild(li);
+                        list.appendChild(li);
+
+                    }
 
                 }
             }
@@ -483,43 +749,86 @@ function loadList(name) {
                 for (var i in tasks) {
 
                     task = tasks[i];
-                    
-                    var li = document.createElement("li");
-                    var input = document.createElement("input");
-                    var link = document.createElement("a");
-                    var span = document.createElement("span");
 
-                    var attr = document.createAttribute("type");
-                    attr.value = "checkbox";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("onclick");
-                    attr.value = "checkTask(this);";
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-id");
-                    attr.value = i;
-                    input.setAttributeNode(attr);
-                    attr = document.createAttribute("data-type");
-                    attr.value = "eliminate";
-                    input.setAttributeNode(attr);
+                    if (task[3] == view) {
 
-                    if (task[3] && task[3] == true)
-                        input.checked = true;
+                        var li = document.createElement("li");
+                        var input = document.createElement("input");
+                        var btn = document.createElement("button");
+                        var span = document.createElement("span");
+                        var attr = "";
 
-                    attr = document.createAttribute("class");
-                    attr.value = i + " list-group-item";
-                    li.setAttributeNode(attr);
+                        if (view != "deleted") {
 
-                    attr = document.createAttribute("class");
-                    attr.value = "badge";
-                    span.setAttributeNode(attr);
+                            attr = document.createAttribute("type");
+                            attr.value = "checkbox";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("onclick");
+                            attr.value = "checkTask(this);";
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            input.setAttributeNode(attr);
+                            attr = document.createAttribute("data-type");
+                            attr.value = "eliminate";
+                            input.setAttributeNode(attr);
 
-                    span.setAttribute("class", "badge");
-                    span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="eliminate">X</a>';
+                            if (task[3] && task[3] == "completed")
+                                input.checked = true;
 
-                    li.appendChild(input);
-                    li.appendChild(span);
-                    li.appendChild(document.createTextNode(task[0]));
-                    list.appendChild(li);
+                        }
+
+                        attr = document.createAttribute("class");
+                        attr.value = i + " list-group-item";
+                        li.setAttributeNode(attr);
+
+                        attr = document.createAttribute("class");
+                        attr.value = "btn btn-default btn-sm";
+                        btn.setAttributeNode(attr);
+
+                        if (view != "deleted") {
+
+                            attr = document.createAttribute("onclick");
+                            attr.value = "loadTask(this);";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-id");
+                            attr.value = i;
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-type");
+                            attr.value = "eliminate";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-toggle");
+                            attr.value = "modal";
+                            btn.setAttributeNode(attr);
+
+                            attr = document.createAttribute("data-target");
+                            attr.value = "#eliminateModal";
+                            btn.setAttributeNode(attr);
+
+                        }
+
+                        btn.innerHTML = task[1];
+
+                        if (task[3] && task[3] == "completed")
+                            btn.style.textDecoration = "line-through";
+
+                        attr = document.createAttribute("class");
+                        attr.value = "badge";
+                        span.setAttributeNode(attr);
+
+                        span.setAttribute("class", "badge");
+                        span.innerHTML = '<a onclick="removeTask(this)" data-id="' + i + '" data-type="eliminate">X</a>';
+
+                        if (view != "deleted")
+                            li.appendChild(input);
+                        li.appendChild(span);
+                        li.appendChild(btn);
+                        list.appendChild(li);
+
+                    }
                 }
             }
 
@@ -534,7 +843,10 @@ function init() {
 
     // Stores the application data
     var matrix = [];
+    var globals = [];
     var profile = [];
+    var sort = [];
+    var view = [];
 
     // Get the data from localStorage
     matrix = JSON.parse(localStorage.getItem("matrix"));
@@ -558,7 +870,7 @@ function init() {
         document.getElementById("welcome").innerHTML = "Welcome, " + profile[0] + ".";
 
     settings = matrix[5];
-        
+
     if (!(settings && settings.length))
         settings = [];
 
@@ -574,6 +886,81 @@ function init() {
     if (settings[3])
         document.getElementById("eliminateBox").style.backgroundColor = settings[3];
 
+    globals = matrix[6];
+
+    if (!(globals && globals.length))
+        globals = [];
+
+    sort = globals[0];
+
+    if (!(sort && sort.length))
+        sort = [];
+
+    // Load the sort options for each quandrant, or default if none
+    if (sort[0])
+        document.getElementById("urgentSortByList").value = sort[0];
+    else {
+        document.getElementById("urgentSortByList").value = "default";
+        sort[0] = "default";
+    }
+
+    if (sort[1])
+        document.getElementById("planSortByList").value = sort[1];
+    else {
+        document.getElementById("planSortByList").value = "default";
+        sort[1] = "default";
+    }
+
+    if (sort[2])
+        document.getElementById("delegateSortByList").value = sort[2];
+    else {
+        document.getElementById("delegateSortByList").value = "default";
+        sort[2] = "default";
+    }
+
+    if (sort[3])
+        document.getElementById("eliminateSortByList").value = sort[3];
+    else {
+        document.getElementById("eliminateSortByList").value = "default";
+        sort[3] = "default";
+    }
+
+    globals[0] = sort;
+    matrix[6] = globals;
+    localStorage.setItem('matrix', JSON.stringify(matrix));
+
+    // Load the task selctor initial value, or default if none
+    if (globals[1])
+        document.getElementById("taskViewSelector").value = globals[1];
+    else {
+        document.getElementById("taskViewSelector").value = "current";
+
+        globals[1] = "current";
+        matrix[6] = globals;
+        localStorage.setItem('matrix', JSON.stringify(matrix));
+
+    }
+
+    if (settings[0])
+        document.getElementById("urgentModal").getElementsByClassName("modal-header")[0].style.backgroundColor = settings[0];
+    else
+        document.getElementById("urgentModal").getElementsByClassName("modal-header")[0].style.backgroundColor = "#f14141";
+
+    if (settings[1])
+        document.getElementById("planModal").getElementsByClassName("modal-header")[0].style.backgroundColor = settings[1];
+    else
+        document.getElementById("planModal").getElementsByClassName("modal-header")[0].style.backgroundColor = "#3cb0ea";
+
+    if (settings[2])
+        document.getElementById("delegateModal").getElementsByClassName("modal-header")[0].style.backgroundColor = settings[2];
+    else
+        document.getElementById("delegateModal").getElementsByClassName("modal-header")[0].style.backgroundColor = "#89b309";
+
+    if (settings[3])
+        document.getElementById("eliminateModal").getElementsByClassName("modal-header")[0].style.backgroundColor = settings[3];
+    else
+        document.getElementById("eliminateModal").getElementsByClassName("modal-header")[0].style.backgroundColor = "grey";
+
 }
 
 function removeTask(listItem) {
@@ -581,6 +968,7 @@ function removeTask(listItem) {
     // Stores the application data
     var matrix = [];
     var tasks = [];
+    var task = [];
 
     // Get the data from localStorage
     matrix = JSON.parse(localStorage.getItem("matrix"));
@@ -588,8 +976,24 @@ function removeTask(listItem) {
     switch (listItem.dataset.type) {
 
         case "urgent":
+
             tasks = matrix[0];
-            tasks.splice(listItem.dataset.id, 1);
+        
+            if (!(tasks && tasks.length))
+                tasks = [];
+                
+            task = tasks[listItem.dataset.id];
+
+            if (!(task && task.length))
+                task = [];
+
+            if (task[3] == "deleted") {
+                tasks.splice(listItem.dataset.id, 1);
+            } else {
+                task[3] = "deleted";
+                tasks[listItem.dataset.id] = task;
+            }
+
             matrix[0] = tasks;
             localStorage.setItem("matrix", JSON.stringify(matrix));
             clearList("urgent");
@@ -597,8 +1001,23 @@ function removeTask(listItem) {
             break;
 
         case "plan":
+
             tasks = matrix[1];
-            tasks.splice(listItem.dataset.id, 1);
+        
+            if (!(tasks && tasks.length))
+                tasks = [];
+                
+            task = tasks[listItem.dataset.id];
+
+            if (!(task && task.length))
+                task = [];
+            if (task[3] == "deleted") {
+                tasks.splice(listItem.dataset.id, 1);
+            } else {
+                task[3] = "deleted";
+                tasks[listItem.dataset.id] = task;
+            }
+
             matrix[1] = tasks;
             localStorage.setItem("matrix", JSON.stringify(matrix));
             clearList("plan");
@@ -606,8 +1025,23 @@ function removeTask(listItem) {
             break;
 
         case "delegate":
+
             tasks = matrix[2];
-            tasks.splice(listItem.dataset.id, 1);
+        
+            if (!(tasks && tasks.length))
+                tasks = [];
+                
+            task = tasks[listItem.dataset.id];
+
+            if (!(task && task.length))
+                task = [];
+            if (task[3] == "deleted") {
+                tasks.splice(listItem.dataset.id, 1);
+            } else {
+                task[3] = "deleted";
+                tasks[listItem.dataset.id] = task;
+            }
+
             matrix[2] = tasks;
             localStorage.setItem("matrix", JSON.stringify(matrix));
             clearList("delegate");
@@ -615,8 +1049,23 @@ function removeTask(listItem) {
             break;
 
         case "eliminate":
+
             tasks = matrix[3];
-            tasks.splice(listItem.dataset.id.id, 1);
+        
+            if (!(tasks && tasks.length))
+                tasks = [];
+                
+            task = tasks[listItem.dataset.id];
+
+            if (!(task && task.length))
+                task = [];
+            if (task[3] == "deleted") {
+                tasks.splice(listItem.dataset.id, 1);
+            } else {
+                task[3] = "deleted";
+                tasks[listItem.dataset.id] = task;
+            }
+
             matrix[3] = tasks;
             localStorage.setItem("matrix", JSON.stringify(matrix));
             clearList("eliminate");
@@ -630,10 +1079,13 @@ function addTask(type) {
 
     // Stores the application data
     var matrix = [];
+    var globals = [];
     var tasks = [];
     var task = [];
+    var buffer = [];
     var action = "";
     var index = 0;
+    var sort = [];
 
     // Get the data from localStorage
     matrix = JSON.parse(localStorage.getItem("matrix"));
@@ -641,11 +1093,18 @@ function addTask(type) {
     if (!(matrix && matrix.length))
         matrix = [];
 
+    globals = matrix[6];
+
+    if (!(globals && globals.length))
+        globals = [];
+
     switch (type) {
 
         case "urgent":
 
             var tname = "";
+            var priority = 0;
+            var ttime = "";
 
             if (matrix[0] && matrix[0].length)
                 tasks = matrix[0];
@@ -660,6 +1119,8 @@ function addTask(type) {
 
             // Task name that will be added to the list and localStorage
             tname = document.forms["urgent"]["name"].value;
+            priority = document.forms["urgent"]["priority"].value;
+            ttime = document.forms["urgent"]["time"].value;
 
             /* Urget Tasks */
             var list = document.getElementById('urgentList');
@@ -674,6 +1135,12 @@ function addTask(type) {
             input.setAttributeNode(attr);
             attr = document.createAttribute("onclick");
             attr.value = "checkTask(this);";
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-id");
+            attr.value = index;
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-type");
+            attr.value = "urgent";
             input.setAttributeNode(attr);
 
             attr = document.createAttribute("class");
@@ -719,8 +1186,18 @@ function addTask(type) {
             list.appendChild(li);
 
             // Check the action and type of data
-            var task = [];
-            task[0] = tname;
+            var temp = tasks[index];
+            task[0] = index;
+            task[1] = tname;
+            task[2] = priority;
+
+            if (temp)
+                task[3] = temp[3];
+            else
+                task[3] = "current";
+
+            task[5] = ttime;
+
             action = document.forms["urgent"]["action"].value;
 
             switch (action) {
@@ -739,16 +1216,24 @@ function addTask(type) {
                     break;
             }
 
-            // Clear form fields
-            document.forms["urgent"]["name"].value = "";
+            sort = globals[0];
+            
+            if (!(sort && sort.length))
+                sort = [];
+            
+            // Sort the list after the new task has been added.
+            sortUrgentTasks(sort[0]);
+
+            // Manually toggle the urgent modal
+            $('#urgentModal').modal('toggle');
 
             break;
 
         case "plan":
 
             var tname = "";
+            var priority = 0;
             var tdate = "";
-            var tother = "";
 
             if (matrix[1] && matrix[1].length)
                 tasks = matrix[1];
@@ -763,6 +1248,7 @@ function addTask(type) {
 
             // Task name that will be added to the list and localStorage
             tname = document.forms["plan"]["name"].value;
+            priority = document.forms["plan"]["priority"].value;
             tdate = document.forms["plan"]["date"].value;
 
             var list = document.getElementById('planList');
@@ -778,6 +1264,12 @@ function addTask(type) {
             input.setAttributeNode(attr);
             attr = document.createAttribute("onclick");
             attr.value = "checkTask(this);";
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-id");
+            attr.value = index;
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-type");
+            attr.value = "plan";
             input.setAttributeNode(attr);
 
             attr = document.createAttribute("class");
@@ -809,13 +1301,13 @@ function addTask(type) {
             btn.setAttributeNode(attr);
 
             btn.innerHTML = tname;
-    
+
             if (tdate) {
                 attr = document.createAttribute("class");
                 attr.value = "date";
                 div.setAttributeNode(attr);
                 div.innerHTML = tdate;
-            }    
+            }
 
             attr = document.createAttribute("class");
             attr.value = "badge";
@@ -832,9 +1324,18 @@ function addTask(type) {
             list.appendChild(li);
 
             // Check the action and type of data
-            var task = [];
-            task[0] = tname;
-            task[1] = tdate;
+            var temp = tasks[index];
+            task[0] = index;
+            task[1] = tname;
+            task[2] = priority;
+
+            if (temp)
+                task[3] = temp[3];
+            else
+                task[3] = "current";
+
+            task[4] = tdate;
+
             action = document.forms["plan"]["action"].value;
 
             switch (action) {
@@ -853,15 +1354,23 @@ function addTask(type) {
                     break;
             }
 
-            // Clear form fields
-            document.forms["plan"]["name"].value = "";
+            sort = globals[0];
+
+            if (!(sort && sort.length))
+                sort = [];
+
+            // Sort the list after the new task has been added.
+            sortPlannedTasks(sort[1]);
+
+            // Manually toggle the urgent modal
+            $('#planModal').modal('toggle');
 
             break;
-
 
         case "delegate":
 
             var tname = "";
+            var priority = 0;
             var tdate = "";
             var tother = "";
 
@@ -878,6 +1387,7 @@ function addTask(type) {
 
             // Task name that will be added to the list and localStorage
             tname = document.forms["delegate"]["name"].value;
+            priority = document.forms["delegate"]["priority"].value;
             tdate = document.forms["delegate"]["date"].value;
             tother = document.forms["delegate"]["other"].value;
 
@@ -895,6 +1405,12 @@ function addTask(type) {
             input.setAttributeNode(attr);
             attr = document.createAttribute("onclick");
             attr.value = "checkTask(this);";
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-id");
+            attr.value = index;
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-type");
+            attr.value = "delegate";
             input.setAttributeNode(attr);
 
             attr = document.createAttribute("class");
@@ -958,10 +1474,19 @@ function addTask(type) {
             list.appendChild(li);
 
             // Check the action and type of data
-            var task = [];
-            task[0] = tname;
-            task[1] = tdate;
-            task[2] = tother;
+            var temp = tasks[index];
+            task[0] = index;
+            task[1] = tname;
+            task[2] = priority;
+
+            if (temp)
+                task[3] = temp[3];
+            else
+                task[3] = "current";
+
+            task[4] = tdate;
+            task[5] = tother;
+
             action = document.forms["delegate"]["action"].value;
 
             switch (action) {
@@ -980,10 +1505,16 @@ function addTask(type) {
                     break;
             }
 
-            // Clear form fields
-            document.forms["delegate"]["name"].value = "";
-            document.forms["delegate"]["date"].value = "";
-            //document.forms["delegate"]["other"].value = "";
+            sort = globals[0];
+            
+            if (!(sort && sort.length))
+                sort = [];
+            
+            // Sort the list after the new task has been added.
+            sortDelegatedTasks(sort[2]);
+
+            // Manually toggle the urgent modal
+            $('#delegateModal').modal('toggle');
 
             break;
 
@@ -994,23 +1525,22 @@ function addTask(type) {
             if (matrix[3] && matrix[3].length)
                 tasks = matrix[3];
 
-                action = document.forms["delegate"]["action"].value;
-                
-                            if (action == 'new') {
-                                index = tasks.length;
-                            } else if (action == 'update') {
-                                index = document.forms["eliminate"]["tid"].value;
-                            }
+            action = document.forms["eliminate"]["action"].value;
+
+            if (action == 'new') {
+                index = tasks.length;
+            } else if (action == 'update') {
+                index = document.forms["eliminate"]["tid"].value;
+            }
 
             // Task name that will be added to the list and localStorage
             tname = document.forms["eliminate"]["name"].value;
 
-            /* Urget Tasks */
             var list = document.getElementById('eliminateList');
 
             var li = document.createElement("li");
             var input = document.createElement("input");
-            var link = document.createElement("a");
+            var btn = document.createElement("button");
             var span = document.createElement("span");
 
             var attr = document.createAttribute("type");
@@ -1019,10 +1549,42 @@ function addTask(type) {
             attr = document.createAttribute("onclick");
             attr.value = "checkTask(this);";
             input.setAttributeNode(attr);
+            attr = document.createAttribute("data-id");
+            attr.value = index;
+            input.setAttributeNode(attr);
+            attr = document.createAttribute("data-type");
+            attr.value = "eliminate";
+            input.setAttributeNode(attr);
 
             attr = document.createAttribute("class");
             attr.value = index + " list-group-item";
             li.setAttributeNode(attr);
+
+            attr = document.createAttribute("class");
+            attr.value = "btn btn-default btn-sm";
+            btn.setAttributeNode(attr);
+
+            attr = document.createAttribute("onclick");
+            attr.value = "loadTask(this);";
+            btn.setAttributeNode(attr);
+
+            attr = document.createAttribute("data-id");
+            attr.value = index;
+            btn.setAttributeNode(attr);
+
+            attr = document.createAttribute("data-type");
+            attr.value = "eliminate";
+            btn.setAttributeNode(attr);
+
+            attr = document.createAttribute("data-toggle");
+            attr.value = "modal";
+            btn.setAttributeNode(attr);
+
+            attr = document.createAttribute("data-target");
+            attr.value = "#eliminateModal";
+            btn.setAttributeNode(attr);
+
+            btn.innerHTML = tname;
 
             attr = document.createAttribute("class");
             attr.value = "badge";
@@ -1033,12 +1595,19 @@ function addTask(type) {
 
             li.appendChild(input);
             li.appendChild(span);
-            li.appendChild(document.createTextNode(tname));
+            li.appendChild(btn);
             list.appendChild(li);
 
             // Check the action and type of data
-            var task = [];
-            task[0] = tname;
+            var temp = tasks[index];
+            task[0] = index;
+            task[1] = tname;
+
+            if (temp)
+                task[3] = temp[3];
+            else
+                task[3] = "current";
+
             action = document.forms["eliminate"]["action"].value;
 
             switch (action) {
@@ -1057,81 +1626,21 @@ function addTask(type) {
                     break;
             }
 
-            // Clear form fields
-            document.forms["eliminate"]["name"].value = "";
+            sort = globals[0];
+            
+            if (!(sort && sort.length))
+                sort = [];
+            
+            // Sort the list after the new task has been added.
+            sortEliminatedTasks(sort[3]);
+
+            // Manually toggle the urgent modal
+            $('#eliminateModal').modal('toggle');
 
     }
 
-}
-function updateTask(form) {
-
-    alert('Updating task' + type);
-
-    // Stores the application data
-    var matrix = [];
-    var tasks = [];
-
-    // Get the data from localStorage
-    matrix = JSON.parse(localStorage.getItem("matrix"));
-
-    switch (type) {
-
-        case "urgent":
-
-        /*
-        // Check for the appropriate action
-        alert(document.forms["urgent"]["action"].value);
- 
-        if (matrix[0] && matrix[0].length)
-            tasks = matrix[0];
- 
-        // Task name that will be added to the list and localStorage
-        tname = document.forms["urgent"]["name"].value;
- 
-        var list = document.getElementById('urgentList');
- 
-        var li = document.createElement("li");
-        var input = document.createElement("input");
-        var link = document.createElement("a");
-        var span = document.createElement("span");
- 
-        var attr = document.createAttribute("type");
-        attr.value = "checkbox";
-        input.setAttributeNode(attr);
-        attr = document.createAttribute("onclick");
-        attr.value = "checkTask(this);";
-        input.setAttributeNode(attr);
- 
-        attr = document.createAttribute("class");
-        attr.value = tasks.length + " list-group-item";
-        li.setAttributeNode(attr);
- 
-        attr = document.createAttribute("class");
-        attr.value = "badge";
-        span.setAttributeNode(attr);
- 
-        span.setAttribute("class", "badge");
-        span.innerHTML = '<a id="' + tasks.length + '" class="urgent" onclick="removeTask(this)">X</a>';
- 
-        li.appendChild(input);
-        li.appendChild(span);
-        li.appendChild(document.createTextNode(tname));
-        list.appendChild(li);
- 
-        // Add new task to localStorage
-        var task = [];
-        task[0] = tname;
-        tasks[tasks.length] = task;
-        matrix[0] = tasks;
-        localStorage.setItem('matrix', JSON.stringify(matrix));
- 
-        // Clear form fields
-        document.forms["urgent"]["name"].value = "";
- 
-        break;
-        */
-
-    }
+    // Return false to prevent the form from submitting
+    return false;
 
 }
 function checkTask(box) {
@@ -1160,16 +1669,31 @@ function checkTask(box) {
         tasks = matrix[index];
 
     task = tasks[box.dataset.id];
+
     var isChecked = box.checked;
 
     if (isChecked) {
-        task[3] = true;
+        task[3] = "completed";
     } else {
-        task[3] = false;
+        task[3] = "current";
     }
 
     matrix[index] = tasks;
     localStorage.setItem("matrix", JSON.stringify(matrix));
+
+    if (box.dataset.type == 'urgent') {
+        clearList("urgent");
+        loadList("urgent");
+    } else if (box.dataset.type == 'plan') {
+        clearList("plan");
+        loadList("plan");
+    } else if (box.dataset.type == 'delegate') {
+        clearList("delegate");
+        loadList("delegate");
+    } else if (box.dataset.type == 'eliminate') {
+        clearList("eliminate");
+        loadList("eliminate");
+    }
 
 }
 function clearList(name) {

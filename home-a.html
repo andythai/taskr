@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Productivity Matrix - Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/template.css" rel="stylesheet">
+
+    <!-- Custom core functionality -->
+    <script src="js/template.js"></script>
+
+    <!-- Custom sort functionality -->
+    <script src="js/sort.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body onload="init()">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html">Productivity Matrix</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="home.html">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="profile.html">Profile</a>
+                    </li>
+                    <li>
+                        <a href="settings.html">Settings</a>
+                    </li>
+                    <li>
+                        <a href="index.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="logo">
+            <a href="home.html">
+                <img src="img/logo.png" alt="Productivity Matrix" />
+            </a>
+        </div>
+        <div id="notices">
+            <h1 id="welcome">Welcome, demo.</h1>
+            <p id="taskcount">Let's make today productive!</p>
+        </div>
+        <div id="matrix">
+            <div id="urgentBox" class="box urgent">
+                <div class="header">
+                    <h2>Urgent</h2>
+                    <h3>Do now.</h3>
+                </div>
+                <div class="body">
+                    <ul id="urgentList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                    <div class="sort">
+                        <form class="form-horizontal">
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="formGroupInputSmall">Sort By</label>
+                                <div class="col-sm-10">
+                                    <select id="urgentSortByList" class="form-control" onchange="sortUrgentTasks(this.value)">
+                                        <option value="default">Default Order</option>
+                                        <option value="priority">Highest Priority</option>
+                                        <option value="ascending">Name: A-Z</option>
+                                        <option value="descending">Name: Z-A</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="new">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#urgentModal"
+                            onclick="newTask('urgent')">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="planBox" class="box plan">
+                <div class="header">
+                    <h2>Plan</h2>
+                    <h3>Plan for the future.</h3>
+                </div>
+                <div class="body">
+                    <ul id="planList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                    <div class="sort">
+                        <form class="form-horizontal">
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="formGroupInputSmall">Sort By</label>
+                                <div class="col-sm-10">
+                                    <select id="planSortByList" class="form-control" onchange="sortPlannedTasks(this.value)">
+                                        <option value="default">Default Order</option>
+                                        <option value="priority">Highest Priority</option>
+                                        <option value="ascending">Name: A-Z</option>
+                                        <option value="descending">Name: Z-A</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="new">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#planModal"
+                            onclick="newTask('plan')">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="delegateBox" class="box delegate">
+                <div class="header">
+                    <h2>Delegate</h2>
+                    <h3>Get help from others.</h3>
+                </div>
+                <div class="body">
+                    <ul id="delegateList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                    <div class="sort">
+                        <form class="form-horizontal">
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="formGroupInputSmall">Sort By</label>
+                                <div class="col-sm-10">
+                                    <select id="delegateSortByList" class="form-control" onchange="sortDelegatedTasks(this.value)">
+                                        <option value="default">Default Order</option>
+                                        <option value="priority">Highest Priority</option>
+                                        <option value="ascending">Name: A-Z</option>
+                                        <option value="descending">Name: Z-A</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="new">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#delegateModal"
+                            onclick="newTask('delegate')">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="eliminateBox" class="box eliminate">
+                <div class="header">
+                    <h2>Eliminate</h2>
+                    <h3>Things to stop doing.</h3>
+                </div>
+                <div class="body">
+                    <ul id="eliminateList" class="list-group"></ul>
+                </div>
+                <div class="action">
+                    <div class="sort">
+                        <form class="form-horizontal">
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="formGroupInputSmall">Sort By</label>
+                                <div class="col-sm-10">
+                                    <select id="eliminateSortByList" class="form-control" onchange="sortEliminatedTasks(this.value)">
+                                        <option value="default">Default Order</option>
+                                        <option value="ascending">Name: A-Z</option>
+                                        <option value="descending">Name: Z-A</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="new">
+                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#eliminateModal"
+                            onclick="newTask('eliminate')">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Urgent Modal -->
+        <div class="modal fade" id="urgentModal" tabindex="-1" role="dialog" aria-labelledby="urgentModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="urgentModalLabel">Add Urgent Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="urgent" name="urgent" method="GET" action="" onsubmit="return addTask('urgent')">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="tid" value="">
+                            <div class="form-group">
+                                <label for="name">Task</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="priority">Priority Value</label>
+                                <input type="text" class="form-control" id="priority" placeholder="Enter priority value..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input type="time" class="form-control" id="time">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan Modal -->
+        <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="planModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="planModalLabel">Add Planned Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="plan" name="plan" method="GET" action="" onsubmit="return addTask('plan')">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="tid" value="">
+                            <div class="form-group">
+                                <label for="name">Task</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="priority">Priority Value</label>
+                                <input type="text" class="form-control" id="priority" placeholder="Enter priority value..." required>
+                            </div>                            
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" id="date" required>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delegate Modal -->
+        <div class="modal fade" id="delegateModal" tabindex="-1" role="dialog" aria-labelledby="delegateModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="delegateModalLabel">Add Delegated Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="delegate" name="delegate" method="GET" action="" onsubmit="return addTask('delegate')">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="tid" value="">
+                            <div class="form-group">
+                                <label for="name">Task</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="priority">Priority Value</label>
+                                <input type="text" class="form-control" id="priority" placeholder="Enter priority value..." required>
+                            </div>                            
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" id="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="other">Delegate to</label>
+                                <input type="text" class="form-control" id="other" name="other" placeholder="Enter their name..." required>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eliminate Modal -->
+        <div class="modal fade" id="eliminateModal" tabindex="-1" role="dialog" aria-labelledby="eliminateModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="eliminateModalLabel">Add Eliminate Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="eliminate" name="eliminate" method="GET" action="" onsubmit="return addTask('eliminate')">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="tid" value="">
+                            <div class="form-group">
+                                <label for="name">Task</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
+                            </div>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2017 Matrix Productivity Technologies</p>
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="actions" class="">Viewing</label>
+                        <select id="taskViewSelector" class="form-control" onchange="setTaskViewingStatus(this.value)">
+                            <option value="current">Current Tasks</option>
+                            <option value="completed">Completed Tasks</option>
+                            <option value="deleted">Deleted Tasks</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>

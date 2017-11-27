@@ -3,6 +3,7 @@ html {
 }
 body {
   padding-top: 50px;
+  padding-bottom: 95px;
 }
 #logo {
   text-align: center;
@@ -19,6 +20,10 @@ h1 {
 #notices {
   padding: 0;
   text-align: center;
+}
+.modal .modal-header {
+  border-radius: 4px 4px 0 0;
+  color: white;
 }
 #matrix {
   min-height: 100%;
@@ -50,9 +55,6 @@ h1 {
   margin: 0;
   font-size: 1rem;
   color: white;
-}
-.box .action {
-  text-align: right;
 }
 .urgent { background-color: #f14141; }
 .plan { background-color: #3cb0ea }
@@ -115,4 +117,19 @@ p.copyright {
 }
 a:hover {
   cursor: pointer;
+}
+.box .action {
+  color: white;
+}
+.box .action .sort {
+  float: left;
+  text-align: left;
+}
+.box .action .new {
+  float: right;
+  text-align: left;
+  margin-top: 25px;
+}
+.navbar-fixed-bottom {
+  color: white;
 }
