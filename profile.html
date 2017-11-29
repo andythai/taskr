@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110491530-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-110491530-1');
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +65,7 @@
                     </li>
                     <li>
                         <a href="profile.html">Profile</a>
-                    </li>                    
+                    </li>
                     <li>
                         <a href="settings.html">Settings</a>
                     </li>
@@ -70,31 +79,37 @@
     </nav>
 
     <div class="container">
-        <div id="logo"><a href="home.html"><img src="img/logo.png" alt="Productivity Matrix" /></a></div>
+        <div id="logo">
+            <a href="home.html">
+                <img src="img/logo.png" alt="Productivity Matrix" />
+            </a>
+        </div>
         <h1>Profile</h1>
-  
+
         <form name="profile">
-                <div class="form-group">
-                    <label for="firstName">First name</label>
-                    <input type="email" class="form-control" id="firstName" value="Demo First Name">
-                </div>
-                <div class="form-group">
-                        <label for="lastName">Last name</label>
-                        <input type="email" class="form-control" id="lastName" value="Demo Last Name">
-                </div>                 
-                <div class="form-group">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" value="demo@test.com">
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" value="demo">
-                </div>
-                <button type="submit" class="btn btn-primary" onclick="saveProfile()">Update</button>
+            <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="email" class="form-control" id="firstName" value="Demo First Name">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="email" class="form-control" id="lastName" value="Demo Last Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" value="demo@test.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" value="demo">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="saveProfile()">Update</button>
         </form>
         <br>
-        <p><a href="home.html">Go Back</a></p>
-        
+        <p>
+            <a href="home.html">Go Back</a>
+        </p>
+
         <p class="copyright">&copy; 2017 Matrix Productivity Technologies</p>
 
     </div>
