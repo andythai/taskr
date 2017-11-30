@@ -8,7 +8,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'UA-110491530-1');
     </script>
     <meta charset="utf-8">
@@ -44,6 +43,46 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("addUrgentTask").addEventListener("click", function () {
+                if ("ga" in window) {
+                    let tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send('event', 'AddUrgentTask', 'click');
+                }
+            }, false);
+        });
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("addPlannedTask").addEventListener("click", function () {
+                if ("ga" in window) {
+                    let tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send('event', 'AddPlannedTask', 'click');
+                }
+            }, false);
+        });
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("addDelegatedTask").addEventListener("click", function () {
+                if ("ga" in window) {
+                    let tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send('event', 'AddDelegatedTask', 'click');
+                }
+            }, false);
+        });
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("addEliminatedTask").addEventListener("click", function () {
+                if ("ga" in window) {
+                    let tracker = ga.getAll()[0];
+                    if (tracker)
+                        tracker.send('event', 'AddEliminatedTask', 'click');
+                }
+            }, false);
+        });
+    </script>
 </head>
 
 <body onload="init()">
@@ -93,7 +132,11 @@
         <div id="matrix">
             <div id="urgentBox" class="box urgent">
                 <div class="header">
+                    {{#if showAlternate}}
                     <h2>Urgent</h2>
+                    {{else}}
+                    <h2>Urgent and Important</h2>
+                    {{/if}}
                     <h3>Do now.</h3>
                 </div>
                 <div class="body">
@@ -116,7 +159,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#urgentModal"
+                        <button type="button" id="addUrgentTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#urgentModal"
                             onclick="newTask('urgent')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -125,7 +168,11 @@
             </div>
             <div id="planBox" class="box plan">
                 <div class="header">
+                    {{#if showAlternate}}
                     <h2>Plan</h2>
+                    {{else}}
+                    <h2>Important and Not Urgent</h2>
+                    {{/if}}
                     <h3>Plan for the future.</h3>
                 </div>
                 <div class="body">
@@ -148,7 +195,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#planModal"
+                        <button type="button" id="addPlannedTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#planModal"
                             onclick="newTask('plan')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -157,7 +204,11 @@
             </div>
             <div id="delegateBox" class="box delegate">
                 <div class="header">
+                    {{#if showAlternate}}
                     <h2>Delegate</h2>
+                    {{else}}
+                    <h2>Urgent and Not Important</h2>
+                    {{/if}}
                     <h3>Get help from others.</h3>
                 </div>
                 <div class="body">
@@ -180,7 +231,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#delegateModal"
+                        <button type="button" id="addDelegatedTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#delegateModal"
                             onclick="newTask('delegate')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -189,7 +240,11 @@
             </div>
             <div id="eliminateBox" class="box eliminate">
                 <div class="header">
+                    {{#if showAlternate}}
                     <h2>Eliminate</h2>
+                    {{else}}
+                    <h2>Not Important and Not Urgent</h2>
+                    {{/if}}
                     <h3>Things to stop doing.</h3>
                 </div>
                 <div class="body">
@@ -211,7 +266,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#eliminateModal"
+                        <button type="button" id="addEliminatedTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#eliminateModal"
                             onclick="newTask('eliminate')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -385,6 +440,8 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/handlebars-v4.0.11"></script>
+
 </body>
 
 </html>
