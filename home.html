@@ -54,8 +54,7 @@
                         tracker.send('event', 'AddUrgentTask', 'click');
                 }
             }, false);
-        });
-        document.addEventListener("DOMContentLoaded", function (event) {
+
             document.getElementById("addPlannedTask").addEventListener("click", function () {
                 if ("ga" in window) {
                     let tracker = ga.getAll()[0];
@@ -63,8 +62,7 @@
                         tracker.send('event', 'AddPlannedTask', 'click');
                 }
             }, false);
-        });
-        document.addEventListener("DOMContentLoaded", function (event) {
+
             document.getElementById("addDelegatedTask").addEventListener("click", function () {
                 if ("ga" in window) {
                     let tracker = ga.getAll()[0];
@@ -72,8 +70,7 @@
                         tracker.send('event', 'AddDelegatedTask', 'click');
                 }
             }, false);
-        });
-        document.addEventListener("DOMContentLoaded", function (event) {
+
             document.getElementById("addEliminatedTask").addEventListener("click", function () {
                 if ("ga" in window) {
                     let tracker = ga.getAll()[0];
@@ -81,7 +78,24 @@
                         tracker.send('event', 'AddEliminatedTask', 'click');
                 }
             }, false);
-        });
+
+        // Load the showAlternative variable
+        var showAlternative = localStorage.getItem("showAlternate");
+
+        if (showAlternative === "true") {
+            document.querySelector("#urgentBox .header h2").innerText = "Urgent";
+            document.querySelector("#planBox .header h2").innerHTML = "Plan";
+            document.querySelector("#delegateBox .header h2").innerHTML = "Delegate";
+            document.querySelector("#eliminateBox .header h2").innerHTML = "Eliminate";
+        } else {
+            document.querySelector("#urgentBox .header h2").innerHTML = "Urgent and Important";
+            document.querySelector("#planBox .header h2").innerHTML = "Important and Not Urgent";
+            document.querySelector("#delegateBox .header h2").innerHTML = "Urgent and Not Important";
+            document.querySelector("#eliminateBox .header h2").innerHTML = "Not Important and Not Urgent";
+        }
+
+    });
+
     </script>
 </head>
 
@@ -132,11 +146,7 @@
         <div id="matrix">
             <div id="urgentBox" class="box urgent">
                 <div class="header">
-                    {{#if showAlternate}}
-                    <h2>Urgent</h2>
-                    {{else}}
-                    <h2>Urgent and Important</h2>
-                    {{/if}}
+                    <h2></h2>
                     <h3>Do now.</h3>
                 </div>
                 <div class="body">
@@ -168,11 +178,7 @@
             </div>
             <div id="planBox" class="box plan">
                 <div class="header">
-                    {{#if showAlternate}}
-                    <h2>Plan</h2>
-                    {{else}}
-                    <h2>Important and Not Urgent</h2>
-                    {{/if}}
+                    <h2></h2>
                     <h3>Plan for the future.</h3>
                 </div>
                 <div class="body">
@@ -204,11 +210,7 @@
             </div>
             <div id="delegateBox" class="box delegate">
                 <div class="header">
-                    {{#if showAlternate}}
-                    <h2>Delegate</h2>
-                    {{else}}
-                    <h2>Urgent and Not Important</h2>
-                    {{/if}}
+                    <h2></h2>
                     <h3>Get help from others.</h3>
                 </div>
                 <div class="body">
@@ -240,11 +242,7 @@
             </div>
             <div id="eliminateBox" class="box eliminate">
                 <div class="header">
-                    {{#if showAlternate}}
-                    <h2>Eliminate</h2>
-                    {{else}}
-                    <h2>Not Important and Not Urgent</h2>
-                    {{/if}}
+                    <h2></h2>
                     <h3>Things to stop doing.</h3>
                 </div>
                 <div class="body">
@@ -440,7 +438,6 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
-    <script src="js/handlebars-v4.0.11.js"></script>
 
 </body>
 
