@@ -2,6 +2,20 @@
 <html lang="en">
 
 <head>
+    <!-- Google Analytics Content Experiment code -->
+    <script>function utmx_section(){}function utmx(){}(function(){var
+        k='165480170-0',d=document,l=d.location,c=d.cookie;
+        if(l.search.indexOf('utm_expid='+k)>0)return;
+        function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
+        indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
+        length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
+        '<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
+        '://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
+        '&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
+        valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
+        '" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
+        </script><script>utmx('url','A/B');</script>
+    <!-- End of Google Analytics Content Experiment code -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110491530-1"></script>
     <script>
@@ -44,7 +58,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script>
+    <script type="text/javascript">
 
         document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("addUrgentTask").addEventListener("click", function () {
@@ -78,39 +92,6 @@
                         tracker.send('event', 'AddEliminatedTask', 'click');
                 }
             }, false);
-
-        // Load the showAlternative variable
-        var showAlternative = localStorage.getItem("showAlternate");
-
-        if (showAlternative === "true") {
-
-            document.querySelector("#urgentBox .header h2").innerHTML = "Urgent";
-            document.querySelector("#urgentModalLabel").innerHTML = "Add Urgent Task";
-
-            document.querySelector("#planBox .header h2").innerHTML = "Plan";
-            document.querySelector("#planModalLabel").innerHTML = "Add Planned Task";
-
-            document.querySelector("#delegateBox .header h2").innerHTML = "Delegate";
-            document.querySelector("#delegateModalLabel").innerHTML = "Add Delegate Task";
-
-            document.querySelector("#eliminateBox .header h2").innerHTML = "Eliminate";
-            document.querySelector("#eliminateModalLabel").innerHTML = "Add Eliminate Task";
-
-        } else {
-            
-            document.querySelector("#urgentBox .header h2").innerHTML = "Urgent and Important";
-            document.querySelector("#urgentModalLabel").innerHTML = "Add Urgent and Important Task";
-
-            document.querySelector("#planBox .header h2").innerHTML = "Important and Not Urgent";
-            document.querySelector("#planModalLabel").innerHTML = "Add Important and Not Urgent Task";
-
-            document.querySelector("#delegateBox .header h2").innerHTML = "Urgent and Not Important";
-            document.querySelector("#delegateModalLabel").innerHTML = "Add Urgent and Not Important Task";
-
-            document.querySelector("#eliminateBox .header h2").innerHTML = "Not Important and Not Urgent";
-            document.querySelector("#eliminateModalLabel").innerHTML = "Add Not Important and Not Urgent Task";
-
-        }
 
     });
 
