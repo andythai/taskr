@@ -141,3 +141,6 @@ a:hover {
   padding: 0 5px;
   font-size: 14px;
 }
+.sort .form-group {
+  margin-bottom: 0;
+}
