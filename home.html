@@ -2,28 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- Google Analytics Content Experiment code -->
-    <script>function utmx_section(){}function utmx(){}(function(){var
-        k='165480170-0',d=document,l=d.location,c=d.cookie;
-        if(l.search.indexOf('utm_expid='+k)>0)return;
-        function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
-        indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
-        length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
-        '<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
-        '://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
-        '&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
-        valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
-        '" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
-        </script><script>utmx('url','A/B');</script>
-    <!-- End of Google Analytics Content Experiment code -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110491530-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'UA-110491530-1');
-    </script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -96,6 +75,7 @@
     });
 
     </script>
+
 </head>
 
 <body onload="init()">
@@ -149,7 +129,7 @@
                     <h3>Do now.</h3>
                 </div>
                 <div class="body">
-                    <ul id="urgentList" class="list-group"></ul>
+                    <ul id="urgentList" class="list-group connectedSortable"></ul>
                 </div>
                 <div class="action">
                     <div class="sort">
@@ -168,7 +148,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" id="addUrgentTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#urgentModal"
+                        <button type="button" id="addUrgentTask" class="btn btn-newtask btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#urgentModal"
                             onclick="newTask('urgent')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -181,7 +161,7 @@
                     <h3>Plan for the future.</h3>
                 </div>
                 <div class="body">
-                    <ul id="planList" class="list-group"></ul>
+                    <ul id="planList" class="list-group connectedSortable"></ul>
                 </div>
                 <div class="action">
                     <div class="sort">
@@ -200,7 +180,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" id="addPlannedTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#planModal"
+                        <button type="button" id="addPlannedTask" class="btn btn-newtask btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#planModal"
                             onclick="newTask('plan')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -213,7 +193,7 @@
                     <h3>Get help from others.</h3>
                 </div>
                 <div class="body">
-                    <ul id="delegateList" class="list-group"></ul>
+                    <ul id="delegateList" class="list-group connectedSortable"></ul>
                 </div>
                 <div class="action">
                     <div class="sort">
@@ -221,7 +201,7 @@
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-2 control-label" for="formGroupInputSmall">Sort By</label>
                                 <div class="col-sm-10">
-                                    <select id="delegateSortByList" class="form-control" onchange="sortDelegatedTasks(this.value)">
+                                    <select id="delegateSortByList" class="form-control " onchange="sortDelegatedTasks(this.value)">
                                         <option value="default">Default Order</option>
                                         <option value="priority">Highest Priority</option>
                                         <option value="ascending">Name: A-Z</option>
@@ -232,7 +212,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" id="addDelegatedTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#delegateModal"
+                        <button type="button" id="addDelegatedTask" class="btn btn-newtask btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#delegateModal"
                             onclick="newTask('delegate')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -245,7 +225,7 @@
                     <h3>Things to stop doing.</h3>
                 </div>
                 <div class="body">
-                    <ul id="eliminateList" class="list-group"></ul>
+                    <ul id="eliminateList" class="list-group connectedSortable"></ul>
                 </div>
                 <div class="action">
                     <div class="sort">
@@ -263,7 +243,7 @@
                         </form>
                     </div>
                     <div class="new">
-                        <button type="button" id="addEliminatedTask" class="btn btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#eliminateModal"
+                        <button type="button" id="addEliminatedTask" class="btn btn-newtask btn-default btn-sm" aria-label="Left Align" data-toggle="modal" data-target="#eliminateModal"
                             onclick="newTask('eliminate')">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Task
                         </button>
@@ -291,8 +271,13 @@
                                 <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
                             </div>
                             <div class="form-group">
-                                <label for="priority">Priority Value</label>
-                                <input type="text" class="form-control" id="priority" placeholder="Enter priority value..." required>
+                                <label for="priority">Priority Level</label>
+                                <select id="priority" class="form-control">
+                                    <option value="5">Very High</option>
+                                    <option value="4">High</option>
+                                    <option value="3">Medium</option>
+                                    <option value="2">Low</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="time">Time</label>
@@ -327,8 +312,13 @@
                                 <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
                             </div>
                             <div class="form-group">
-                                <label for="priority">Priority Value</label>
-                                <input type="text" class="form-control" id="priority" placeholder="Enter priority value..." required>
+                                <label for="priority">Priority Level</label>
+                                <select id="priority" class="form-control">
+                                    <option value="5">Very High</option>
+                                    <option value="4">High</option>
+                                    <option value="3">Medium</option>
+                                    <option value="2">Low</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="date">Date</label>
@@ -363,8 +353,13 @@
                                 <input type="text" class="form-control" id="name" placeholder="Enter task name..." required>
                             </div>
                             <div class="form-group">
-                                <label for="priority">Priority Value</label>
-                                <input type="text" class="form-control" id="priority" placeholder="Enter priority value..." required>
+                                <label for="priority">Priority Level</label>
+                                <select id="priority" class="form-control">
+                                    <option value="5">Very High</option>
+                                    <option value="4">High</option>
+                                    <option value="3">Medium</option>
+                                    <option value="2">Low</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="date">Date</label>
@@ -437,6 +432,17 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+
+    <script>
+            $(function() {
+                $( "#urgentList, #planList" ).sortable({
+                    connectWith: ".connectedSortable"
+                }).disableSelection();
+            });
+            </script>
 
 </body>
 

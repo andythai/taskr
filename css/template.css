@@ -46,14 +46,14 @@ h1 {
   margin-bottom: 8px;
 }
 .box h2 {
-  margin: 0;
-  font-size: 1.25rem;
+  margin: 0 0 2px 0;
+  font-size: 1.50rem;
   font-weight: bold;
   color: white;
 }
 .box h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.20rem;
   color: white;
 }
 .urgent { background-color: #f14141; }
@@ -132,4 +132,12 @@ a:hover {
 }
 .navbar-fixed-bottom {
   color: white;
+}
+.btn-newtask {
+  font-size: 1.25rem;
+}
+#urgentSortByList {
+  height: 38px;
+  padding: 0 5px;
+  font-size: 14px;
 }

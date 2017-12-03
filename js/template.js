@@ -84,7 +84,6 @@ function newTask(type) {
 
             // Clear form fields
             document.forms["delegate"]["name"].value = "";
-            document.forms["delegate"]["priority"].value = "";
             document.forms["delegate"]["date"].value = "";
             document.forms["delegate"]["other"].value = "";
 
