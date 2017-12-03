@@ -32,6 +32,7 @@ h1 {
   flex-direction: row;
 }
 #matrix > div {
+  width: 100%;
   display: flex; 
   flex-basis: 100%;  
   justify-content: center;
@@ -98,22 +99,21 @@ h1 {
   border: none;
 }
 .box .body .date {
-
   float: right;
   margin-right: 10px;
   font-size: .9rem;
   margin-top: 3px;
 }
 .box .body .delegatedto {
-  
-    float: right;
-    margin-right: 10px;
-    font-size: .9rem;
-    margin-top: 3px;
+  margin-right: 10px;
+  font-size: .9rem;
+  margin-top: 3px;
+  margin-left: 25px;
+  font-weight: bold;
 }
 p.copyright {
-    text-align: center;
-    font-size: .9rem;
+  text-align: center;
+  font-size: .9rem;
 }
 a:hover {
   cursor: pointer;
@@ -136,11 +136,101 @@ a:hover {
 .btn-newtask {
   font-size: 1.25rem;
 }
-#urgentSortByList {
+#urgentSortByList, #planSortByList,
+#delegateSortByList, #eliminateSortByList {
   height: 38px;
   padding: 0 5px;
   font-size: 14px;
 }
 .sort .form-group {
   margin-bottom: 0;
+}
+.list-group-item button.btn {
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: left;
+}
+#urgentBox .list-group-item button {
+  width: 175px;
+  margin-left: 5px;
+}
+#planBox .list-group-item button {
+  width: 140px;
+  margin-left: 5px;
+}
+#delegateBox .list-group-item button {
+  width: 175px;
+  margin-left: 5px;
+}
+#eliminateBox .list-group-item button {
+  width: 215px;
+  margin-left: 5px;
+}
+
+/* Urgent list item sizes */
+@media screen and (max-width: 449px) and (min-width: 350px) {
+  #urgentBox .list-group-item button {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 549px) and (min-width: 450px) {
+  #urgentBox .list-group-item button {
+    width: 75%;
+  }
+}
+@media screen and (min-width: 550px) {
+  #urgentBox .list-group-item button {
+    width: 80%;
+  }
+}
+
+/* Plan list item sizes */
+@media screen and (max-width: 449px) and (min-width: 350px) {
+  #planBox .list-group-item button {
+    width: 55%;
+  }
+}
+@media screen and (max-width: 549px) and (min-width: 450px) {
+  #planBox .list-group-item button {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 550px) {
+  #planBox .list-group-item button {
+    width: 75%;
+  }
+}
+
+/* Delegate list item sizes */
+@media screen and (max-width: 449px) and (min-width: 350px) {
+  #delegateBox .list-group-item button {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 549px) and (min-width: 450px) {
+  #delegateBox .list-group-item button {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 550px) {
+  #delegateBox .list-group-item button {
+    width: 75%;
+  }
+}
+
+/* Eliminate list item sizes */
+@media screen and (max-width: 449px) and (min-width: 350px) {
+  #eliminateBox .list-group-item button {
+    width: 86%;
+  }
+}
+@media screen and (max-width: 549px) and (min-width: 450px) {
+  #eliminateBox .list-group-item button {
+    width: 89%;
+  }
+}
+@media screen and (min-width: 550px) {
+  #eliminateBox .list-group-item button {
+    width: 92%;
+  }
 }

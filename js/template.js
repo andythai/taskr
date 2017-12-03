@@ -60,8 +60,9 @@ function newTask(type) {
 
             // Clear form fields
             document.forms["urgent"]["name"].value = "";
-            document.forms["urgent"]["priority"].value = "";
             document.forms["urgent"]["time"].value = "";
+            document.forms["urgent"]["emailReminder"].checked = false;
+            document.forms["urgent"]["textReminder"].checked = false;
 
             break;
 
@@ -72,8 +73,9 @@ function newTask(type) {
 
             // Clear form fields
             document.forms["plan"]["name"].value = "";
-            document.forms["plan"]["priority"].value = "";
             document.forms["plan"]["date"].value = "";
+            document.forms["plan"]["emailReminder"].checked = false;
+            document.forms["plan"]["textReminder"].checked = false;
 
             break;
 
@@ -86,6 +88,8 @@ function newTask(type) {
             document.forms["delegate"]["name"].value = "";
             document.forms["delegate"]["date"].value = "";
             document.forms["delegate"]["other"].value = "";
+            document.forms["delegate"]["emailReminder"].checked = false;
+            document.forms["delegate"]["textReminder"].checked = false;
 
             break;
 
@@ -131,7 +135,10 @@ function loadTask(item) {
             document.forms["urgent"]["tid"].value = id;
             document.forms["urgent"]["name"].value = task[1];
             document.forms["urgent"]["priority"].value = task[2];
-            document.forms["urgent"]["time"].value = task[5];            
+            document.forms["urgent"]["time"].value = task[5];
+            alert("task[6]: " + task[6]);
+            document.forms["urgent"]["emailReminder"].checked = task[6];
+            document.forms["urgent"]["textReminder"].checked = task[7];                 
             document.forms["urgent"]["action"].value = "update";
 
             break;
@@ -328,7 +335,9 @@ function updateTask(listItem) {
             document.forms["urgent"]["tid"].value = id;
             document.forms["urgent"]["name"].value = task[1];
             document.forms["urgent"]["priority"].value = task[2];
-            document.forms["urgent"]["time"].value = task[5];            
+            document.forms["urgent"]["time"].value = task[5];
+            document.forms["urgent"]["emailReminder"].value = task[6];
+            document.forms["urgent"]["phoneReminder"].value = task[7];                               
             document.forms["urgent"]["action"].value = "update";
 
             break;

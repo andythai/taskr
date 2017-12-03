@@ -176,6 +176,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                var obj = document.getElementById('addUrgentTask');
+                obj.addEventListener('touchend', function(event) {
+                    // Save the new task order
+                }, false);
+            </script>
             <div id="planBox" class="box plan">
                 <div class="header">
                     <h2>Plan</h2>
@@ -304,6 +310,11 @@
                                 <label for="time">Time</label>
                                 <input type="time" class="form-control" id="time">
                             </div>
+                            <div class="form-check">
+                                <label class="form-check-label">Task Reminders</label><br>
+                                  <input id="emailReminder" class="form-check-input" type="checkbox" value=""> Email Reminder<br>
+                                  <input id="textReminder" class="form-check-input" type="checkbox" value=""> Text Reminder
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -345,6 +356,11 @@
                                 <label for="date">Date</label>
                                 <input type="date" class="form-control" id="date" required>
                             </div>
+                            <div class="form-check">
+                                <label class="form-check-label">Task Reminders</label><br>
+                                  <input id="emailReminder" class="form-check-input" type="checkbox" value=""> Email Reminder<br>
+                                  <input id="textReminder" class="form-check-input" type="checkbox" value=""> Text Reminder
+                            </div>                            
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -389,6 +405,11 @@
                             <div class="form-group">
                                 <label for="other">Delegate to</label>
                                 <input type="text" class="form-control" id="other" name="other" placeholder="Enter their name..." required>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">Task Reminders</label><br>
+                                  <input id="emailReminder" class="form-check-input" type="checkbox" value=""> Email Reminder<br>
+                                  <input id="textReminder" class="form-check-input" type="checkbox" value=""> Text Reminder
                             </div>
                     </div>
                     <div class="modal-footer">
@@ -458,12 +479,12 @@
     <script src="js/jquery.ui.touch-punch.min.js"></script>
 
     <script>
-            $(function() {
-                $( "#urgentList, #planList" ).sortable({
-                    connectWith: ".connectedSortable"
-                }).disableSelection();
-            });
-            </script>
+    $(function() {
+        $( "#urgentList, #planList" ).sortable({
+            connectWith: ".connectedSortable"
+        }).disableSelection();
+    });
+    </script>
 
 </body>
 
