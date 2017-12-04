@@ -316,7 +316,6 @@ function updateTask(listItem) {
     var id = listItem.dataset.id;
     var task = [];
 
-
     // Get the data from localStorage
     matrix = JSON.parse(localStorage.getItem("matrix"));
 
@@ -336,7 +335,7 @@ function updateTask(listItem) {
             document.forms["urgent"]["priority"].value = task[2];
             document.forms["urgent"]["time"].value = task[5];
             document.forms["urgent"]["emailReminder"].value = task[6];
-            document.forms["urgent"]["phoneReminder"].value = task[7];                               
+            document.forms["urgent"]["textReminder"].value = task[7];                               
             document.forms["urgent"]["action"].value = "update";
 
             break;
@@ -1112,6 +1111,8 @@ function addTask(type) {
             var tname = "";
             var priority = 0;
             var ttime = "";
+            var temailreminder = "";
+            var ttextreminder = "";
 
             if (matrix[0] && matrix[0].length)
                 tasks = matrix[0];
@@ -1128,6 +1129,8 @@ function addTask(type) {
             tname = document.forms["urgent"]["name"].value;
             priority = document.forms["urgent"]["priority"].value;
             ttime = document.forms["urgent"]["time"].value;
+            temailreminder = document.forms["urgent"]["emailReminder"].checked;
+            ttextreminder = document.forms["urgent"]["textReminder"].checked;
 
             /* Urget Tasks */
             var list = document.getElementById('urgentList');
@@ -1204,6 +1207,8 @@ function addTask(type) {
                 task[3] = "current";
 
             task[5] = ttime;
+            task[6] = temailreminder; 
+            task[7] = ttextreminder;
 
             action = document.forms["urgent"]["action"].value;
 
