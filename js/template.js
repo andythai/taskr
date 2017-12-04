@@ -136,7 +136,6 @@ function loadTask(item) {
             document.forms["urgent"]["name"].value = task[1];
             document.forms["urgent"]["priority"].value = task[2];
             document.forms["urgent"]["time"].value = task[5];
-            alert("task[6]: " + task[6]);
             document.forms["urgent"]["emailReminder"].checked = task[6];
             document.forms["urgent"]["textReminder"].checked = task[7];                 
             document.forms["urgent"]["action"].value = "update";
