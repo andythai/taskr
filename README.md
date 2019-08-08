@@ -5,6 +5,6 @@ Group Members:
 2. Ronald Baldonado
 3. Andy Thai
 
-Website found at: https://andythai.github.io
+Website found at: http://andyth.ai/taskr/
 
 Video: https://www.youtube.com/watch?v=e8cNwnBu8Pg
